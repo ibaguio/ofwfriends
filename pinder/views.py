@@ -47,7 +47,7 @@ def api_register(requests):
         return HttpResponse(json.dumps({"status": "success"}))
 
     except Exception, e:
-        err_msg = "e"
+        err_msg = "%s" % e
         return HttpResponse(json.dumps({"status": "fail",
                                         "message": err_msg}))
 
@@ -60,9 +60,9 @@ def api_search(requests):
 
 def api_people_nearby(requests):
     fb_id = requests.GET.get("me")
-    distance = int(requests.GET.get("distance"))
+    distance = int(requests.GET.get("distance",10))
 
-    me = User.objects.get(id=fb_id)
+    me = User.objects.get(fb_id=fb_id)
     data = me.distance_within(distance)
 
     return HttpResponse(json.dumps({"status": "success",

@@ -43,9 +43,15 @@ class User(models.Model):
         d_ = []
 
         if dict_:
-            for user in data:
-                d_.append(dict(user))
-        return data
+            for userdist in data:
+                if self == userdist._1:
+                    user = userdist._2
+                else:
+                    user = userdist._1
+                data_ = dict(user)
+                data_["distance"] = userdist.distance
+                d_.append(data_)
+        return d_
 
     def distance_with(self, user):
         """Return distance of user with self"""
@@ -88,8 +94,9 @@ class User(models.Model):
 
     @classmethod
     def create(cls, fb_data, token=""):
-        u = User.objects.get(fb_id=fb_data['id'])
+        u = User.objects.filter(fb_id=fb_data['id'])
         if u:
+            print "already exists"
             return u
 
         user = User(fb_id=fb_data['id'],
