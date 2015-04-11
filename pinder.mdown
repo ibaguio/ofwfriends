@@ -54,6 +54,6 @@ GET Parameters:
 ### LOGIN FLOW ###
 
 Have the 'Login with Facebook' open this URL:
-https://www.facebook.com/dialog/oauth?client_id=702303806446281&redirect_uri=http://SERVER_DOMAIN/auth/facebook/&scope=user_birthday,user_likes,user_hometown,user_work_history
+https://www.facebook.com/dialog/oauth?client_id=702303806446281&redirect_uri=http://SERVER_DOMAIN/auth/facebook/&scope=user_birthday,user_likes,user_hometown,user_work_history,
 
 Response: Same as calling api/me/ above

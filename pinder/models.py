@@ -22,7 +22,7 @@ class User(models.Model):
     GENDER = ((MALE, "Male"),
               (FEMALE, "Female"))
 
-    fb_id = models.CharField(max_length=64)
+    fb_id = models.CharField(max_length=64, unique=True)
     first_name = models.CharField(max_length=32)
     last_name = models.CharField(max_length=32)
     birthday = models.DateField()
@@ -60,7 +60,7 @@ class User(models.Model):
 
     @property
     def picture_url(self):
-        return "https://graph.facebook.com/%s/picture?type=square" % self.fb_id
+        return "https://graph.facebook.com/%s/picture?type=large" % self.fb_id
 
     @property
     def coordinates(self):
@@ -77,7 +77,18 @@ class User(models.Model):
         return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
 
     @classmethod
+    def get_user_from_id(cls, fb_id, token):
+        fb = OpenFacebook(token)
+
+        data = fb.get("me")
+        cls.create(data, token)
+
+    @classmethod
     def create(cls, fb_data, token=""):
+        u = User.objects.get(fb_id=fb_data['id'])
+        if u:
+            return u
+
         user = User(fb_id=fb_data['id'],
                     first_name=fb_data['first_name'],
                     last_name=fb_data['last_name'],

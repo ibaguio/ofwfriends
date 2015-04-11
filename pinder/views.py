@@ -35,6 +35,21 @@ def api_me(requests):
 
     return HttpResponse(json.dumps(resp))
 
+def api_register(requests):
+    try:
+        fb_id = requests.POST.get("me")
+        token = requests.POST.get("token")
+
+
+        user = User.get_user_from_id(fb_id, token)
+
+        return HttpResponse(json.dumps({"status": "success"}))
+
+    except Exception, e:
+        err_msg = "e"
+        return HttpResponse(json.dumps({"status": "fail",
+                                        "message": err_msg}))
+
 def api_search(requests):
     """Search for locations given a query."""
     query = requests.GET.get("query")
