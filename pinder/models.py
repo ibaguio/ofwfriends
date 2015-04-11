@@ -5,7 +5,7 @@ from django.db import models
 from django.db.models import Q
 from open_facebook import OpenFacebook
 
-from pinder.here_api import haversine
+from pinder.here_api import haversine, here_geocde
 
 def has_changed(instance, field):
     """Return true if field of instance has changed"""
@@ -88,8 +88,11 @@ class User(models.Model):
             user.hometown = fb_data['hometown']
         if "work" in fb_data:
             user.job = fb_data['work']
+
         if "location" in fb_data:
             user.location = fb_data['location']['name']
+            loc = here_geocde(user.location, first_only=True)['coordinates']
+            user.current_location = ",".join([str(loc[k]) for k in loc])
 
         if "current_location" in fb_data:
             user.current_location = fb_data['current_location']
