@@ -78,9 +78,12 @@ class User(models.Model):
 
     @classmethod
     def get_user_from_id(cls, fb_id, token):
+        print "received post", fb_id, token
         fb = OpenFacebook(token)
 
         data = fb.get("me")
+        print data
+
         cls.create(data, token)
 
     @classmethod

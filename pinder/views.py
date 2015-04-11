@@ -7,6 +7,7 @@ from django.conf import settings
 from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
+from django.views.decorators.csrf import csrf_exempt
 
 from open_facebook import OpenFacebook
 
@@ -35,11 +36,11 @@ def api_me(requests):
 
     return HttpResponse(json.dumps(resp))
 
+@csrf_exempt
 def api_register(requests):
     try:
         fb_id = requests.POST.get("me")
         token = requests.POST.get("token")
-
 
         user = User.get_user_from_id(fb_id, token)
 
