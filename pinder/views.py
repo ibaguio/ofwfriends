@@ -109,6 +109,7 @@ def fb_auth_handler(request):
     user = User.create(user_data, token=accesstoken)
 
     if user:
-        return HttpResponse(json.dumps({"status": "success"}))
+        return HttpResponse(json.dumps({"status": "success",
+                                        "data": dict(user)}))
     else:
         return HttpResponse(json.dumps({"status": "fail"}))
