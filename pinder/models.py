@@ -29,7 +29,8 @@ class User(models.Model):
     hometown = models.CharField(max_length=32, default='')
     job = models.CharField(max_length=32, default='')
     token = models.CharField(max_length=255)  # FB access token
-    current_location = models.CharField(max_length=128, default="")
+    current_location = models.CharField(max_length=128, default="") # long lat
+    location = models.CharField(max_length=65, default="")
     gender = models.CharField(max_length=1, choices=GENDER)
 
     def __str__(self):
@@ -87,6 +88,9 @@ class User(models.Model):
             user.hometown = fb_data['hometown']
         if "work" in fb_data:
             user.job = fb_data['work']
+        if "location" in fb_data:
+            user.location = fb_data['location']
+
         if "current_location" in fb_data:
             user.current_location = fb_data['current_location']
 
@@ -130,7 +134,7 @@ class User(models.Model):
 
     def __iter__(self):
         for item in ["fb_id", "first_name", "last_name", "age",
-                     "birthday", "hometown", "job"]:
+                     "birthday", "hometown", "job", "location"]:
             if item == 'birthday':
                 ret = (item, self.birthday.strftime("%m/%d/%y"))
             else:

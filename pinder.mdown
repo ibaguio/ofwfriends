@@ -1,8 +1,8 @@
 
 
-Pinder api v1.0
+# Pinder api v1.0 #
 
-### api/me/ ###
+#### api/me/ ###
 
 Returns the details of the logged user.
 
@@ -19,7 +19,7 @@ Response object:
         }
     }
 
-### api/search/ ###
+#### api/search/ ###
 
 Returns address information for a specific query address.
 
@@ -40,6 +40,20 @@ Response: List of relevant matches (dict), each dictionary containing the follow
 Note: if len(response) == 1, you got an exact match
 
 
-### api/nearby/ ###
+#### api/nearby/ ###
 
 Returns list of dictionaries containing user data of people nearby. See docs for /api/me above for response structure
+
+GET Parameters:
+    me - the facebook id of the user whose details are to be returned
+    distance - the distance in kilometers for your search radius
+
+
+
+
+### LOGIN FLOW ###
+
+Have the 'Login with Facebook' open this URL:
+https://www.facebook.com/dialog/oauth?client_id=702303806446281&redirect_uri=http://SERVER_DOMAIN/auth/facebook/&scope=user_birthday,user_likes,user_hometown,user_work_history
+
+Response: Same as calling api/me/ above

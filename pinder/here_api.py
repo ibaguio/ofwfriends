@@ -9,17 +9,16 @@ from django.conf import settings
 logger = logging.getLogger("views")
 
 
-def here_geocde(searchtext):
+def here_geocde(searchtext, first_only=False):
     try:
         data = (settings.HERE_APP_ID,
                 settings.HERE_APP_CODE,
                 searchtext.replace(" ", "+"))
-        print data
+
         url = ("http://geocoder.cit.api.here.com/6.2/geocode.json"
                "?app_id=%s&app_code=%s&searchtext=%s" % data)
 
         r = requests.get(url)
-        # print "response", r.text
 
         data = json.loads(r.text)['Response']["View"][0]["Result"]
 
@@ -34,13 +33,17 @@ def here_geocde(searchtext):
         else:
             d_ = []
             for result in data:
-                d_.append({
+                dict_ = {
                     'label': result['Location']['Address']['Label'],
                     'country': result['Location']['Address']['Country'],
                     'state': result['Location']['Address']['State'],
                     'coordinates': result['Location']['DisplayPosition'],
                     'location_id': result['Location']['LocationId']
-                    })
+                    }
+                if first_only:
+                    return dict_
+
+                d_.append(dict_)
 
             return d_
     except Exception, e:
