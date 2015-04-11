@@ -1,4 +1,6 @@
+import json
 import logging
+import requests
 from urlparse import urlparse, parse_qs
 
 from django.conf import settings
@@ -14,7 +16,10 @@ from ofwfriends.models import *
 logger = logging.getLogger(__name__)
 
 def landing_page(request):
-    return render("landing-page.html")
+    return render(request, "landing-page.html")
+
+def test_login(request):
+    return render(request, "test-login.html")
 
 def fb_auth_handler(request):
     # Retrieve oAuth response
@@ -27,14 +32,16 @@ def fb_auth_handler(request):
         try:
             logger.warning("Facebook returned error: %s" % query["error"])
         except KeyError:
-            return HttpResponse("Please login and allow Facebook to continue.")
+            err_msg = "Please login and allow Facebook to continue."
+            return HttpResponse(json.dumps({"status": "success",
+                                            "message": err_msg}))
 
     # Recreate the redirect_uri
     redir_path = request.get_full_path()
 
     logger.info("exchanging code for accesstoken...")
 
-    redirect_uri = request.META['wsgi.url_scheme'] + "://" +
+    redirect_uri = request.META['wsgi.url_scheme'] + "://" +\
                    request.get_host() + reverse("fb_auth_handler")
 
     payload = {
@@ -52,13 +59,27 @@ def fb_auth_handler(request):
     if "error" in fbresponse or not len(fbresponse):
         # TODO: Error handling
         if "error" in fbresponse:
-            logger.warning("FB returned error: %s" % fbresponse["error"])
+            err_msg = "FB returned error: %s" % fbresponse["error"]
+            logger.warning(err_msg)
+
         else:
-            logger.warning("User fb token expired.")
+            err_msg = "User fb token expired."
+            logger.warning(err_msg)
+
+        return HttpResponse(json.dumps({"status": "success",
+                                        "message": err_msg}))
 
     # Acquire accesstoken
     accesstoken = fbresponse["access_token"][0]
-
+    print accesstoken
     # Acquire userinfo
     graph = OpenFacebook(accesstoken)
     user_data = graph.get('me')
+
+    print user_data
+    user = User.create(user_data, token=accesstoken)
+
+    if user:
+        return HttpResponse(json.dumps({"status": "success"}))
+    else:
+        return HttpResponse(json.dumps({"status": "fail"}))
