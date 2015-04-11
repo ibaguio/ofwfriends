@@ -66,9 +66,7 @@ class User(models.Model):
         try:
             long_, lat_ = self.current_location.split(",")
             return (float(long_), float(lat_))
-        except Exception, e:
-            print "err, loc", self.current_location
-            logging.exception(e)
+        except:
             return None
 
     @property
@@ -122,7 +120,6 @@ class User(models.Model):
             for like in likes:
                 Interest.get_or_create(like, self)
         except Exception, e:
-            import logging
             logging.exception(e)
 
     @classmethod
@@ -134,7 +131,11 @@ class User(models.Model):
     def __iter__(self):
         for item in ["fb_id", "first_name", "last_name", "age",
                      "birthday", "hometown", "job"]:
-            yield getattr(item, self)
+            if item == 'birthday':
+                ret = (item, self.birthday.strftime("%m/%d/%y"))
+            else:
+                ret = (item, getattr(self, item))
+            yield ret
 
 
 class UserDistance(models.Model):
@@ -156,9 +157,11 @@ class UserDistance(models.Model):
         except UserDistance.DoesNotExist:
             ud = cls(_1=user_1, _2=user_2)
 
+        if not user_1.coordinates or not user_2.coordinates:
+            return
+
         long1, lat1 = user_1.coordinates
         long2, lat2 = user_2.coordinates
-        print long1, lat1, long2, lat2
         distance = haversine(long1, lat1, long2, lat2)
         ud.distance = distance
 
