@@ -9,9 +9,10 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+from __future__ import absolute_import
 import os
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-print BASE_DIR
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
@@ -100,6 +101,8 @@ FB_AUTH_REDIRECT = "http://localhost:8000/auth/facebook/"
 HERE_APP_ID = "BesTRPqhaKlwoC5VjDEi"
 HERE_APP_CODE = "Qdg6JhSEv5Iy4o8Wg6-rYw"
 
+# Celery Settings
+BROKER_URL = 'amqp://guest:guest@%s//' % ('localhost')
 
 LOGGING = {
     'version': 1,
@@ -117,7 +120,7 @@ LOGGING = {
             'class': 'logging.FileHandler',
             'filename': 'logs/main.log'
         },
-        'file-main': {
+        'file-tasks': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'filename': 'logs/tasks.log'

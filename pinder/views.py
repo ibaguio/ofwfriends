@@ -13,7 +13,7 @@ from open_facebook import OpenFacebook
 from pinder.here_api import *
 from pinder.models import *
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("views")
 
 def landing_page(request):
     return render(request, "landing-page.html")
@@ -22,12 +22,12 @@ def test_login(request):
     return render(request, "test-login.html")
 
 def api_me(requests):
-    fb_id = requests.GET.get("id")
+    fb_id = requests.GET.get("me")
     resp = {"status": "success"}
 
     try:
-        u = User.objects.get(fb_id=fb_id)
-        resp["data"] = dict(u)
+        me = User.objects.get(fb_id=fb_id)
+        resp["data"] = dict(me)
 
     except Exception, e:
         resp["status"] = "fail"
@@ -38,11 +38,19 @@ def api_me(requests):
 def api_search(requests):
     """Search for locations given a query."""
     query = requests.GET.get("query")
-    return HttpResponse(json.dumps(here_geocde(query)))
+
+    return HttpResponse(json.dumps({"status": "success",
+                                    "result": here_geocde(query)}))
 
 def api_people_nearby(requests):
+    fb_id = requests.GET.get("me")
+    distance = int(requests.GET.get("distance"))
 
-    pass
+    me = User.objects.get(id=fb_id)
+    data = me.distance_within(distance)
+
+    return HttpResponse(json.dumps({"status": "success",
+                                    "result": data}))
 
 def fb_auth_handler(request):
     # Retrieve oAuth response

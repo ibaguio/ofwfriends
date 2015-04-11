@@ -1,14 +1,20 @@
 import json
 import requests
+import logging
+
 from math import radians, cos, sin, asin, sqrt
 
 from django.conf import settings
 
+logger = logging.getLogger("views")
+
 
 def here_geocde(searchtext):
     try:
-
-        data = (settings.HERE_APP_ID, settings.HERE_APP_CODE, searchtext)
+        data = (settings.HERE_APP_ID,
+                settings.HERE_APP_CODE,
+                searchtext.replace(" ", "+"))
+        print data
         url = ("http://geocoder.cit.api.here.com/6.2/geocode.json"
                "?app_id=%s&app_code=%s&searchtext=%s" % data)
 
@@ -19,10 +25,8 @@ def here_geocde(searchtext):
 
         if "MatchType" in data[0] and data[0]["MatchType"] == "pointAddress":
             return [{'label': data['Label'],
-                     'counter': data['Country'],
+                     'country': data['Country'],
                      'state': data['State'],
-                     'label': data['Label'],
-                     'label': data['Label'],
                      'coordinates': data['Location']['DisplayPosition'],
                      'location_id': data['Location']['LocationId']
                      }]
@@ -34,8 +38,6 @@ def here_geocde(searchtext):
                     'label': result['Location']['Address']['Label'],
                     'country': result['Location']['Address']['Country'],
                     'state': result['Location']['Address']['State'],
-                    # 'label': result['Label'],
-                    # 'label': result['Label'],
                     'coordinates': result['Location']['DisplayPosition'],
                     'location_id': result['Location']['LocationId']
                     })
