@@ -12,6 +12,9 @@ class User(models.Model):
     job = models.CharField(max_length=32, default='')
     token = models.CharField(max_length=255)  # FB access token
 
+    def __str__(self):
+        return "%s, %s" % (self.last_name, self.first_name)
+
     @classmethod
     def create(cls, fb_data, token=""):
         user = User(first_name=fb_data['first_name'],
@@ -67,3 +70,6 @@ class Interest(models.Model):
             like.user.add(user)
 
         return like
+
+    def __str__(self):
+        return "[%s] %s" % (self.fb_id, self.interest)
