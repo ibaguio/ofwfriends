@@ -89,7 +89,7 @@ class User(models.Model):
         if "work" in fb_data:
             user.job = fb_data['work']
         if "location" in fb_data:
-            user.location = fb_data['location']
+            user.location = fb_data['location']['name']
 
         if "current_location" in fb_data:
             user.current_location = fb_data['current_location']
