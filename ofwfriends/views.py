@@ -11,7 +11,7 @@ from django.core.urlresolvers import reverse
 from open_facebook import OpenFacebook
 
 
-from ofwfriends.models import *
+from pinder.models import *
 
 logger = logging.getLogger(__name__)
 
@@ -20,6 +20,20 @@ def landing_page(request):
 
 def test_login(request):
     return render(request, "test-login.html")
+
+def api_me(requests):
+    fb_id = requests.GET.get("id")
+    resp = {"status": "success"}
+
+    try:
+        u = User.objects.get(fb_id=fb_id)
+        resp["data"] = dict(u)
+
+    except Exception, e:
+        resp["status"] = "fail"
+        resp["error"] = e
+
+    return HttpResponse(json.dumps(resp))
 
 def fb_auth_handler(request):
     # Retrieve oAuth response
@@ -33,7 +47,7 @@ def fb_auth_handler(request):
             logger.warning("Facebook returned error: %s" % query["error"])
         except KeyError:
             err_msg = "Please login and allow Facebook to continue."
-            return HttpResponse(json.dumps({"status": "success",
+            return HttpResponse(json.dumps({"status": "fail",
                                             "message": err_msg}))
 
     # Recreate the redirect_uri
@@ -66,7 +80,7 @@ def fb_auth_handler(request):
             err_msg = "User fb token expired."
             logger.warning(err_msg)
 
-        return HttpResponse(json.dumps({"status": "success",
+        return HttpResponse(json.dumps({"status": "fail",
                                         "message": err_msg}))
 
     # Acquire accesstoken

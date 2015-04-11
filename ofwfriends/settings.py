@@ -1,5 +1,5 @@
 """
-Django settings for ofwfriends project.
+Django settings for pinder project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/1.6/topics/settings/
@@ -36,7 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'ofwfriends',
+    'pinder',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -51,15 +51,15 @@ MIDDLEWARE_CLASSES = (
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django_facebook.context_processors.facebook',
     'django.contrib.auth.context_processors.auth',
-    'ofwfriends.context_processors.static_vars',
+    'pinder.context_processors.static_vars',
 )
 TEMPLATE_LOADERS = (
     "django.template.loaders.filesystem.Loader",
     "django.template.loaders.app_directories.Loader",
 )
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
-ROOT_URLCONF = 'ofwfriends.urls'
-WSGI_APPLICATION = 'ofwfriends.wsgi.application'
+ROOT_URLCONF = 'pinder.urls'
+WSGI_APPLICATION = 'pinder.wsgi.application'
 
 
 # Database

@@ -5,6 +5,7 @@ from open_facebook import OpenFacebook
 
 
 class User(models.Model):
+    fb_id = models.CharField(max_length=64)
     first_name = models.CharField(max_length=32)
     last_name = models.CharField(max_length=32)
     birthday = models.DateField()
@@ -15,9 +16,14 @@ class User(models.Model):
     def __str__(self):
         return "%s, %s" % (self.last_name, self.first_name)
 
+    @property
+    def picture_url(self):
+        return "https://graph.facebook.com/%s/picture?type=square" % self.fb_id
+
     @classmethod
     def create(cls, fb_data, token=""):
-        user = User(first_name=fb_data['first_name'],
+        user = User(fb_id=fb_data['id'],
+                    first_name=fb_data['first_name'],
                     last_name=fb_data['last_name'],
                     token=token,
                     birthday=datetime.strptime(fb_data['birthday'],
@@ -50,6 +56,11 @@ class User(models.Model):
         return cls.objects.create(first_name="Juan",
                                   last_name="Dela Cruz",
                                   birthday=date.today())
+
+    def __iter__(self):
+        for item in ["fb_id", "first_name", "last_name",
+                     "birthday", "hometown", "job", "token"]:
+            yield getattr(item, self)
 
 
 class Interest(models.Model):
