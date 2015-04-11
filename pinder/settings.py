@@ -97,6 +97,10 @@ FACEBOOK_APP_SECRET = "ee2a881823f96c2825735b6dddef50e9"
 FB_AUTH_REDIRECT = "http://localhost:8000/auth/facebook/"
 
 
+HERE_APP_ID = "BesTRPqhaKlwoC5VjDEi"
+HERE_APP_CODE = "Qdg6JhSEv5Iy4o8Wg6-rYw"
+
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -108,10 +112,15 @@ LOGGING = {
         },
     },
     'handlers': {
-        'file': {
+        'file-main': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'filename': 'logs/main.log'
+        },
+        'file-main': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/tasks.log'
         },
         'console': {
             'class': 'logging.StreamHandler',
@@ -119,7 +128,12 @@ LOGGING = {
     },
     'loggers': {
         'views': {
-            'handlers': ['file', 'console'],
+            'handlers': ['file-main', 'console'],
+            'level': 'DEBUG',
+            'propagate': True
+        },
+        'tasks': {
+            'handlers': ['file-tasks'],
             'level': 'DEBUG',
             'propagate': True
         }

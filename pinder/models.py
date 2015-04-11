@@ -1,7 +1,19 @@
 from datetime import datetime, date
 
 from django.db import models
+from django.db.models import Q
 from open_facebook import OpenFacebook
+
+from pinder.here_api import haversine
+from pinder.tasks import task_generate_distance
+
+
+def has_changed(instance, field):
+    """Return true if field of instance has changed"""
+    if not instance.pk:
+        return False
+    old_value = instance.__class__._default_manager.filter(pk=instance.pk).values(field).get()[field]
+    return not getattr(instance, field) == old_value
 
 
 class User(models.Model):
@@ -12,13 +24,30 @@ class User(models.Model):
     hometown = models.CharField(max_length=32, default='')
     job = models.CharField(max_length=32, default='')
     token = models.CharField(max_length=255)  # FB access token
+    current_location = models.CharField(max_length=128, default="")
 
     def __str__(self):
         return "%s, %s" % (self.last_name, self.first_name)
 
+    def distance_with(self, user):
+        try:
+            q = Q(_1=self, _2=user) | Q(_1=user, _2=self)
+            return UserDistance.objects.get(q).distance
+
+        except UserDistance.DoesNotExist:
+            return None
+
     @property
     def picture_url(self):
         return "https://graph.facebook.com/%s/picture?type=square" % self.fb_id
+
+    @property
+    def coordinates(self):
+        try:
+            long_, lat_ = self.current_location.split(",")
+            return (long_, lat_)
+        except:
+            return None
 
     @classmethod
     def create(cls, fb_data, token=""):
@@ -37,6 +66,17 @@ class User(models.Model):
         user.populate_likes()
 
         return user
+
+    def save(self, *args, **kwargs):
+        if not self.pk or has_changed(self, "current_location"):
+            # location has been updated
+            # run tasks to calculate distance with other people
+            # but first let us save to get the object id
+            super(User, self).save(args, kwargs)
+            task_generate_distance.delay(self.pk)
+
+        else:
+            super(User, self).save(args, kwargs)
 
     def populate_likes(self):
         assert self.token
@@ -61,6 +101,35 @@ class User(models.Model):
         for item in ["fb_id", "first_name", "last_name",
                      "birthday", "hometown", "job", "token"]:
             yield getattr(item, self)
+
+
+class UserDistance(models.Model):
+    """Store distance of each user with respect to every other user.
+
+    Not a very optimal solution. But hey, this is a hackathon."""
+
+    _1 = models.ForeignKey(User, related_name="distance_1")
+    _2 = models.ForeignKey(User, related_name="distance_2")
+    distance = models.IntegerField()  # in kms
+
+    @classmethod
+    def set_distance(cls, user_1, user_2):
+        q = Q(_1=user_1, _2=user_2) | Q(_1=user_2, _2=user_1)
+
+        # Get the UserDistance for this user
+        try:
+            ud = cls.get(q)
+        except UserDistance.DoesNotExist:
+            ud = cls(_1=user_1, _2=user_2)
+
+        long1, lat1 = user_1.coordinates()
+        long2, lat2 = user_2.coordinates()
+
+        distance = haversine()
+        ud.distance = distance
+
+        ud.save()
+        return distance
 
 
 class Interest(models.Model):

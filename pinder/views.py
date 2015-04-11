@@ -10,7 +10,7 @@ from django.core.urlresolvers import reverse
 
 from open_facebook import OpenFacebook
 
-
+from pinder.here_api import *
 from pinder.models import *
 
 logger = logging.getLogger(__name__)
@@ -34,6 +34,15 @@ def api_me(requests):
         resp["error"] = e
 
     return HttpResponse(json.dumps(resp))
+
+def api_search(requests):
+    """Search for locations given a query."""
+    query = requests.GET.get("query")
+    return HttpResponse(json.dumps(here_geocde(query)))
+
+def api_people_nearby(requests):
+
+    pass
 
 def fb_auth_handler(request):
     # Retrieve oAuth response
@@ -85,12 +94,10 @@ def fb_auth_handler(request):
 
     # Acquire accesstoken
     accesstoken = fbresponse["access_token"][0]
-    print accesstoken
     # Acquire userinfo
     graph = OpenFacebook(accesstoken)
     user_data = graph.get('me')
 
-    print user_data
     user = User.create(user_data, token=accesstoken)
 
     if user:
