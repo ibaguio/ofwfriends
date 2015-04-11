@@ -4,6 +4,7 @@ from urlparse import urlparse, parse_qs
 from django.conf import settings
 from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect
+from django.core.urlresolvers import reverse
 
 from open_facebook import OpenFacebook
 
@@ -24,8 +25,7 @@ def fb_auth_handler(request):
     if "error" in query and "access_denied" in query["error"] and \
             "user_denied" in query["error_reason"]:
         try:
-            authSession.warning("Facebook returned error: %s" % query["error"])
-            return redirect(authSession.captive_url)
+            logger.warning("Facebook returned error: %s" % query["error"])
         except KeyError:
             return HttpResponse("Please login and allow Facebook to continue.")
 
@@ -33,9 +33,13 @@ def fb_auth_handler(request):
     redir_path = request.get_full_path()
 
     logger.info("exchanging code for accesstoken...")
+
+    redirect_uri = request.META['wsgi.url_scheme'] + "://" +
+                   request.get_host() + reverse("fb_auth_handler")
+
     payload = {
         "client_id": settings.FACEBOOK_APP_ID,
-        "redirect_uri": fb_auth_redirect,
+        "redirect_uri": redirect_uri,
         "client_secret": settings.FACEBOOK_APP_SECRET,
         "code": query["code"][0]
     }
@@ -48,11 +52,9 @@ def fb_auth_handler(request):
     if "error" in fbresponse or not len(fbresponse):
         # TODO: Error handling
         if "error" in fbresponse:
-            authSession.warning("FB returned error: %s" % fbresponse["error"])
+            logger.warning("FB returned error: %s" % fbresponse["error"])
         else:
-            authSession.warning("User fb token expired.")
-
-        return redirect_to_captive_url(request, authSession)
+            logger.warning("User fb token expired.")
 
     # Acquire accesstoken
     accesstoken = fbresponse["access_token"][0]

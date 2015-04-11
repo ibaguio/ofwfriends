@@ -92,14 +92,15 @@ LOGGING = {
     'disable_existing_loggers': False,
     'formatters': {
         'verbose': {
-            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
-            'datefmt' : "%d/%b/%Y %H:%M:%S %p"
+            'format': ("[%(asctime)s] %(levelname)s "
+                       "[%(name)s:%(lineno)s] %(message)s"),
+            'datefmt': "%d/%b/%Y %H:%M:%S %p"
         },
     },
     'handlers': {
         'file': {
             'level': 'DEBUG',
-            'class': 'logging.handler.FileHandler',
+            'class': 'logging.FileHandler',
             'filename': 'logs/main.log'
         },
         'console': {
@@ -113,12 +114,4 @@ LOGGING = {
             'propagate': True
         }
     }
-
-
-
-
-
-
-
-
-
+}
