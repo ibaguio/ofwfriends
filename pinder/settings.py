@@ -130,15 +130,15 @@ LOGGING = {
         },
     },
     'loggers': {
-        'views': {
-            'handlers': ['file-main', 'console'],
-            'level': 'DEBUG',
-            'propagate': True
-        },
-        'tasks': {
-            'handlers': ['file-tasks'],
-            'level': 'DEBUG',
-            'propagate': True
-        }
+        # 'views': {
+        #     'handlers': ['console'],
+        #     'level': 'DEBUG',
+        #     'propagate': True
+        # },
+        # 'tasks': {
+        #     'handlers': ['file-tasks'],
+        #     'level': 'DEBUG',
+        #     'propagate': True
+        # }
     }
 }
