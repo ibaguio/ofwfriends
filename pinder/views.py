@@ -29,7 +29,7 @@ def api_send_message(requests):
         msg = requests.POST.get("msg")
 
         user = User.objects.get(fb_id=from_)
-        msg_fmt = "%s sent you a message via Pinder:\n\n%s\n\nYou may connect with me at http://pinder.ph/user/%s"
+        msg_fmt = "%s sent you a message via Pinder:\n\n%s\n\nYou may connect with me at http://pinder.ph/user/%s\n"
         if msg_type == "sms":
             msg_final = msg_fmt % (user.first_name, msg, user.fb_id)
             send_sms("09989511843", msg_final)
@@ -48,10 +48,24 @@ def nearby_location(requests):
     dist = int(requests.GET.get("distance", 5))
 
     address = requests.GET.get("address", "")
-    if address:
-        data = here_geocde(address, first_only=True)['coordinates']
-        lon, lat = float(data['Longitude']), float(data['Latitude'])
     near = []
+
+    try:
+        q = Q(first_name__iexact=address) | Q(last_name__iexact=address) | Q(fb_id=address)
+        for user in User.objects.filter(q):
+            near.append(dict(user))
+
+    except Exception, e:
+        print e
+
+    try:
+        if address:
+            data = here_geocde(address, first_only=True)['coordinates']
+            lon, lat = float(data['Longitude']), float(data['Latitude'])
+    except Exception, e:
+        print e
+
+
     for user in User.objects.all():
         if user.distance_within_coords(dist, lat, lon):
             near.append(dict(user))
