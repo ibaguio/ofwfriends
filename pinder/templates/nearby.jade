@@ -1,79 +1,20 @@
 extends ./base.jade
 
-block page_header
-   .col-sm-12
-      .page-header
-         // BREADCRUMBS
-         ul.breadcrumb
-            li
-               i.fa.fa-home
-               a(href='index.html') Home
-            li Map
-         .clearfix
-            h3.content-title.pull-left Buddy Map
-         .description Discover new places to study
-
 block page_content
    //- .col-md-4(style='padding-left:30px;')
    //-    .row
-   #floating(style="margin-left:65%")
-    form.form-inline#search-form(role='form')
+   #floating(style="margin-left:75%")
+    form.form-block#search-form(role='form')
       .form-group
-         input.form-control#search-query(type='text', placeholder='Search for Filipinos in')
+         input.form-control#search-query(type='text', placeholder='Search a place')
+      .form-group
+         input.form-control#search-distance(type='text', placeholder='Search radius', value='5')
       .form-group
          button#location-search(type='button',class='btn btn-info')
             | Search
       .row
-   .col-md-8(style="margin-top:25px")
+   .col-md-9(style="margin-top:25px")
       #map(style='width: 99%; height: 600px; background: grey; margin-right: 1%')
-   .col-md-4(style="margin-top:25px")
-
-   // Modal
-   #create-session-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
-      .modal-dialog
-        .modal-content
-          .modal-header
-            button.close(type='button', data-dismiss='modal')
-              span(aria-hidden='true') &times;
-              span.sr-only Close
-            h3#myModalLabel.modal-title Study at
-               span#study-location-name
-          form.form-horizontal#create-study-session(role="form")
-               .modal-body
-                  .form-group
-                     label(for='study-session-name')
-                        | Study Session Name
-                     input.form-control#study-session-name(type='text',placeholder='Integral Calculus Review',name='name',required)
-                  .form-group
-                     label(for='description')
-                        | Description (Optional)
-                     input.form-control#description(type='text',placeholder='Review session for basic, and advanced Calculus',name='description')
-                  .form-group
-                     label(for='target-interest')
-                        | Interest
-                      br
-                     select.form-control#target-interest(multiple,required,name="targetInterest", style="width: 400px;")
-                  .form-group
-                     label(for='target-channels')
-                        | Channels
-                     input.form-control#target-channels(type='text',name="targetChannels")
-                  .form-group
-                     label(for='max-members')
-                        | Maximum Students
-                     input.form-control#max-members(type='number',name='maxMembers',min="0",max="30",value='0',required)
-                  .form-group
-                     label(for='datetime')
-                        | Date and Time
-                     input.form-control#datetime-picker(type='text',name='datetime',required)
-
-                  input(type='hidden',name='here_id')
-                  input(type='hidden',name='longitude')
-                  input(type='hidden',name='latitude')
-                  input(type='hidden',name='place_name')
-
-               .modal-footer
-                  button.btn.btn-default(type='button', data-dismiss='modal') Close
-                  button.btn.btn-primary(type='submit') Create Study Session
 
 block post_scripts
    link(rel='stylesheet', type='text/css', href='http://js.api.here.com/v3/3.0/mapsjs-ui.css')
@@ -102,17 +43,6 @@ block post_scripts
                    }
                  },
             multiple: true,
-            ajax: {
-               url: '/studyinterests/query/',
-               dataType: 'json',
-               data: function(term, p) {
-                  return term;
-               },
-               results: function(data, p) {
-                  console.log(data);
-                  return data;
-               }
-            }
          });
 
 
@@ -155,6 +85,8 @@ block post_scripts
 
       function doSearch(){
          var query = $("input#search-query").val();
+         var dist = $("input#search-distance").val();
+
          $.ajax({
             // url: '//geocoder.cit.api.here.com/6.2/geocode.json',
             // data: {'searchtext': query, 'app_id': app_id, 'app_code':app_code, 'gen': 6},
@@ -164,7 +96,7 @@ block post_scripts
             //-        'q': query, 'app_id': app_id, 'app_code':app_code},
 
             url: "/nearby/location/",
-            data: { 'address': query },
+            data: { 'address': query , "distance": dist},
             dataType: 'json',
             success: function(data){
                console.log('removing previous objects');
@@ -186,11 +118,11 @@ block post_scripts
                   var data_ = evt.target.getData();
                   for (i=0; i < bubs.length; i++){ui.removeBubble(bubs[i]);}
 
-                  $('span#study-location-name').text(" "+data_.title);
+                  $('span#study-location-name').text(" "+data_.first_name);
                   $('input[name="here_id"]').val(data_.res.id);
-                  $('input[name="longitude"]').val(data_.res.position[0]);
-                  $('input[name="latitude"]').val(data_.res.position[1]);
-                  $('input[name="place_name"]').val(data_.title);
+                  $('input[name="longitude"]').val(data_.res.coordinates[0]);
+                  $('input[name="latitude"]').val(data_.res.coordinates[1]);
+                  $('input[name="place_name"]').val(data_.first_name);
 
                   var bubble =  new H.ui.InfoBubble(evt.target.getPosition(), {
                      // read custom data
@@ -198,49 +130,27 @@ block post_scripts
                   });
                   // show info bubble
                   ui.addBubble(bubble);
-                  var data = {"longitude": data_.res.position[0],
-                              "latitude": data_.res.position[1]};
-
-                  $.ajax({
-                     url: '/nearby/location/',
-                     type: 'get',
-                     data: data,
-                     success: function(data_){
-                        $("#reserved-sessions-here").html();
-                        var sessions_html = "";
-                        for (i=0; i< data_.length; i++){
-                           var data = data_[i];
-                           console.log(data);
-                           sessions_html += "<a href='#'>"+data.name+" ("+data.interest+
-                           ")</a><br/>Host: "+data.host+"<br/>Sched: "+data.datetime+"<br/>----------------<br/>";
-                           console.log(sessions_html);
-                        }
-                        $("#reserved-sessions-here").html(sessions_html);
-                     },
-                     error: function(){
-                        console.log('error loading sessions_html');
-                     }
-                  })
-
                }, false);
 
-               console.log(data);
-               //- // parse data and add markers on the map
-               //- var results = data.results.items;
-
-               //- for (var i in results){
-               //-    var result = results[i];
-               //-    console.log(result);
-               //-    console.log("Adding: "+ result.title+ " @ " +result.position[0] + ","+result.position[1])
-               //-    // add marker on map
-               //-    addMarkerToGroup(group, {lat: result.position[0], lng:result.position[1]},
-               //-       {'res':result,'title':result.title+ ", " + result.vicinity.split('<br/>')[0] ,
-               //-       'html':'<div style="width:180px;padding:2px 5px"><h4>'+ result.title + '</h4><div id="reserved-sessions-here"></div>'+
-               //-       '<br/><span class="infobubble-vicinity">'+result.vicinity+
-               //-       '<span><br/><a href="#create-session-modal" data-target="#create-session-modal"'+
-               //-       'data-toggle="modal">Plan a study session here!</a></div>'});
-               //- }
-               //- map.setViewBounds(group.getBounds());
+               // parse data and add markers on the map
+               var results = data.result;
+               console.log(results)
+               for (var i in results){
+                  var result = results[i];
+                  console.log(result);
+                  console.log("Adding: "+ result.first_name+ " @ " +result.coordinates[0] + ","+result.coordinates[1])
+                  // add marker on map
+                  addMarkerToGroup(group, {lat: result.coordinates[0], lng:result.coordinates[1]},
+                     {'res':result,
+                     'title':result.first_name,
+                     'html':'<div style="width:220px;padding:2px 5px"><h4>'+ result.first_name + '</h4><div id="nearby-user"></div>'+
+                     '<br/><img src="https://graph.facebook.com/'+ result.fb_id +'/picture?type=large" style="width:50%"/>'+
+                     '<br/><span class="infobubble-vicinity">Location: '+result.location+
+                     '<span><br/><span class="infobubble-vicinity">Hometown: '+result.hometown+
+                     '<span><br/><a href="#create-session-modal" data-target="#create-session-modal"'+
+                     'data-toggle="modal">Contact '+ result.first_name +'!</a></div>'});
+               }
+               map.setViewBounds(group.getBounds());
 
                //- window.setTimeout(function(){
                //-    if (map.getZoom() > 13){
@@ -259,76 +169,6 @@ block post_scripts
          doSearch();
       });
 
-      $("#datetime-picker").datetimepicker({
-         minDate:0
-      });
-
-      $("form#create-study-session").submit(function(e){
-         e.preventDefault();
-
-         var paramObj = {};
-         $.each($('form#create-study-session').serializeArray(), function(_, kv) {
-            if (paramObj.hasOwnProperty(kv.name)) {
-               paramObj[kv.name] = $.makeArray(paramObj[kv.name]);
-               paramObj[kv.name].push(kv.value);
-            }
-            else {
-               paramObj[kv.name] = kv.value;
-            }
-         });
-
-         $.ajax({
-            url: '/study_sessions/create/',
-            type: 'post',
-            data: paramObj,
-            success: function(data){
-               console.log(data);
-               window.location = '/map/?success=true&search='+ encodeURIComponent($("#search-query").val());
-            },
-            error: function(){
-               console.log('error')
-            }
-         });
-      });
-
-      function getUrlParameter(sParam){
-          var sPageURL = window.location.search.substring(1);
-          var sURLVariables = sPageURL.split('&');
-          for (var i = 0; i < sURLVariables.length; i++)
-          {
-              var sParameterName = sURLVariables[i].split('=');
-              if (sParameterName[0] == sParam)
-              {
-                  return sParameterName[1];
-              }
-          }
-      }
-
-      $(document).ready(function(){
-         // check if search exist, if so search it
-         try{
-            var query = decodeURIComponent(getUrlParameter("search"));
-
-            if (query != 'undefined'){
-               $("#search-query").val(query);
-               doSearch();
-            }
-
-            var success = decodeURIComponent(getUrlParameter("success"));
-            if (success === 'true'){
-               var n = noty({
-                  text: 'Successfully created a new study session',
-                  animation: {
-                       open: {height: 'toggle'}, // jQuery animate function property object
-                       close: {height: 'toggle'}, // jQuery animate function property object
-                       easing: 'swing', // easing
-                       speed: 500 // opening & closing animation speed
-                   }
-               });
-            }
-         }catch(err){}
-
-      });
 block css
    link(rel='stylesheet', type='text/css', href='/static/css/jquery.datetimepicker.css')
    link(rel='stylesheet', type='text/css', href='/static/tagsinput/bootstrap-tagsinput.css')

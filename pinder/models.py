@@ -175,7 +175,7 @@ class User(models.Model):
     def __iter__(self):
         for item in ["fb_id", "first_name", "last_name", "age",
                      "birthday", "hometown", "job", "location",
-                     "picture_url"]:
+                     "picture_url", "coordinates"]:
             if item == 'birthday':
                 ret = (item, self.birthday.strftime("%m/%d/%y"))
             else:

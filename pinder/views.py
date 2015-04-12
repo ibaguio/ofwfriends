@@ -22,15 +22,15 @@ def nearby(requests):
 def nearby_location(requests):
     lon = float(requests.GET.get("longitude",0))
     lat = float(requests.GET.get("latitude",0))
+    dist = int(requests.GET.get("distance", 5))
 
     address = requests.GET.get("address", "")
-
     if address:
         data = here_geocde(address, first_only=True)['coordinates']
         lon, lat = float(data['Longitude']), float(data['Latitude'])
     near = []
     for user in User.objects.all():
-        if user.distance_within_coords(12, lat, lon):
+        if user.distance_within_coords(dist, lat, lon):
             near.append(dict(user))
 
     return HttpResponse(json.dumps({"status": "success",
