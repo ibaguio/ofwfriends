@@ -16,8 +16,36 @@ from pinder.models import *
 
 logger = logging.getLogger("views")
 
+def nearby(requests):
+    return render(requests, "nearby.jade")
+
+def nearby_location(requests):
+    # fb_id = requests.session['me']
+    fb_id = "100007055736414"
+
+    lon = float(requests.GET.get("longitude"),0)
+    lat = float(requests.GET.get("latitude"),0)
+
+    address = requests.GET.get("address", "")
+
+    if address:
+        data = here_geocde(address, first_only=True)['coordinates']
+        lon, lat = float(data['Longitude']), float(data['Latitude'])
+
+    me = User.objects.get(fb_id=fb_id)
+
+    near = []
+    for user in User.objects.all():
+        if user == me:
+            continue
+        if user.distance_within_coords(12, lon, lat):
+            near.append(dict(user))
+
+    return HttpResponse(json.dumps({"status": "success",
+                                    "result": near}))
+
 def landing_page(request):
-    return render(request, "landing-page.html")
+    return render(request, "index.html")
 
 def test_login(request):
     return render(request, "test-login.html")
@@ -35,6 +63,21 @@ def api_me(requests):
         resp["error"] = e
 
     return HttpResponse(json.dumps(resp))
+
+@csrf_exempt
+def api_update_me(requests):
+    fb_id = requests.POST.get("me")
+    user = User.objects.get(fb_id=fb_id)
+    try:
+        for key in requests.POST:
+            user.update(key, requests.POST.get(key))
+
+        return HttpResponse(json.dumps({"status": "success"}))
+
+    except Exception, e:
+        err_msg = "%s" % e
+        return HttpResponse(json.dumps({"status": "fail",
+                                        "message": err_msg}))
 
 @csrf_exempt
 def api_register(requests):
@@ -125,7 +168,9 @@ def fb_auth_handler(request):
     user = User.create(user_data, token=accesstoken)
 
     if user:
-        return HttpResponse(json.dumps({"status": "success",
-                                        "data": dict(user)}))
+        request.session['me'] = user.fb_id
+        return redirect("/nearby/")
+        # return HttpResponse(json.dumps({"status": "success",
+        #                                 "data": dict(user)}))
     else:
         return HttpResponse(json.dumps({"status": "fail"}))

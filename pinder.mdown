@@ -49,7 +49,16 @@ GET Parameters:
     distance - the distance in kilometers for your search radius
 
 
+### api/update/me/ ###
 
+Endpoint handler for updating user details
+
+POST Data:
+    me - the facebook id of the user whose details are to be returned
+    key/value - user's attribute `key` will be set to `value
+
+Returns:
+    JSON status (success/error)
 
 ### LOGIN FLOW ###
 

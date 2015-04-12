@@ -18,9 +18,11 @@ def has_changed(instance, field):
 class User(models.Model):
     MALE = 'M'
     FEMALE = 'F'
+    OTHER = 'O'
 
     GENDER = ((MALE, "Male"),
-              (FEMALE, "Female"))
+              (FEMALE, "Female"),
+              (OTHER, "Other"))
 
     fb_id = models.CharField(max_length=64, unique=True)
     first_name = models.CharField(max_length=32)
@@ -32,9 +34,15 @@ class User(models.Model):
     current_location = models.CharField(max_length=128, default="") # long lat
     location = models.CharField(max_length=65, default="")
     gender = models.CharField(max_length=1, choices=GENDER)
+    mobile_number = models.CharField(max_length=32)
 
     def __str__(self):
         return "%s, %s" % (self.last_name, self.first_name)
+
+    def distance_within_coords(self, dist, lon, lat):
+        lon_, lat_ = self.coordinates
+
+        return haversine(lon, lat, lon_, lat_) <= dist
 
     def distance_within(self, dist, dict_=True):
         """Return user's within *dist* kms."""
@@ -51,6 +59,7 @@ class User(models.Model):
                 data_ = dict(user)
                 data_["distance"] = userdist.distance
                 d_.append(data_)
+
         return d_
 
     def distance_with(self, user):
@@ -63,6 +72,14 @@ class User(models.Model):
 
         except UserDistance.DoesNotExist:
             return None
+
+    def update(self, key, value):
+        try:
+            setattr(self, key, value)
+            self.save()
+            return True
+        except Exception, e:
+            logging.exception(e)
 
     @property
     def picture_url(self):
@@ -196,7 +213,6 @@ class UserDistance(models.Model):
 
         ud.save()
         return distance
-
 
 class Interest(models.Model):
     fb_id = models.CharField(max_length=64, unique=True)
