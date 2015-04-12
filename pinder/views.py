@@ -23,8 +23,8 @@ def nearby_location(requests):
     # fb_id = requests.session['me']
     fb_id = "100007055736414"
 
-    lon = float(requests.GET.get("longitude"),0)
-    lat = float(requests.GET.get("latitude"),0)
+    lon = float(requests.GET.get("longitude",0))
+    lat = float(requests.GET.get("latitude",0))
 
     address = requests.GET.get("address", "")
 
@@ -103,7 +103,7 @@ def api_search(requests):
 
 def api_people_nearby(requests):
     fb_id = requests.GET.get("me")
-    distance = int(requests.GET.get("distance",10))
+    distance = int(requests.GET.get("distance", 10))
 
     me = User.objects.get(fb_id=fb_id)
     data = me.distance_within(distance)

@@ -164,8 +164,7 @@ block post_scripts
             //-        'q': query, 'app_id': app_id, 'app_code':app_code},
 
             url: "/nearby/location/",
-            data: { 'address': query }
-
+            data: { 'address': query },
             dataType: 'json',
             success: function(data){
                console.log('removing previous objects');

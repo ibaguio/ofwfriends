@@ -114,7 +114,7 @@ class User(models.Model):
         u = User.objects.filter(fb_id=fb_data['id'])
         if u:
             print "already exists"
-            return u
+            return u.get()
 
         user = User(fb_id=fb_data['id'],
                     first_name=fb_data['first_name'],
