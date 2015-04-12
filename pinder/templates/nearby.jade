@@ -1,0 +1,345 @@
+extends ./base.jade
+
+block page_header
+   .col-sm-12
+      .page-header
+         // BREADCRUMBS
+         ul.breadcrumb
+            li
+               i.fa.fa-home
+               a(href='index.html') Home
+            li Map
+         .clearfix
+            h3.content-title.pull-left Buddy Map
+         .description Discover new places to study
+
+block page_content
+   //- .col-md-4(style='padding-left:30px;')
+   //-    .row
+   #floating(style="margin-left:65%")
+    form.form-inline#search-form(role='form')
+      .form-group
+         input.form-control#search-query(type='text', placeholder='Search for Filipinos in')
+      .form-group
+         button#location-search(type='button',class='btn btn-info')
+            | Search
+      .row
+   .col-md-8(style="margin-top:25px")
+      #map(style='width: 99%; height: 600px; background: grey; margin-right: 1%')
+   .col-md-4(style="margin-top:25px")
+
+   // Modal
+   #create-session-modal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal')
+              span(aria-hidden='true') &times;
+              span.sr-only Close
+            h3#myModalLabel.modal-title Study at
+               span#study-location-name
+          form.form-horizontal#create-study-session(role="form")
+               .modal-body
+                  .form-group
+                     label(for='study-session-name')
+                        | Study Session Name
+                     input.form-control#study-session-name(type='text',placeholder='Integral Calculus Review',name='name',required)
+                  .form-group
+                     label(for='description')
+                        | Description (Optional)
+                     input.form-control#description(type='text',placeholder='Review session for basic, and advanced Calculus',name='description')
+                  .form-group
+                     label(for='target-interest')
+                        | Interest
+                      br
+                     select.form-control#target-interest(multiple,required,name="targetInterest", style="width: 400px;")
+                  .form-group
+                     label(for='target-channels')
+                        | Channels
+                     input.form-control#target-channels(type='text',name="targetChannels")
+                  .form-group
+                     label(for='max-members')
+                        | Maximum Students
+                     input.form-control#max-members(type='number',name='maxMembers',min="0",max="30",value='0',required)
+                  .form-group
+                     label(for='datetime')
+                        | Date and Time
+                     input.form-control#datetime-picker(type='text',name='datetime',required)
+
+                  input(type='hidden',name='here_id')
+                  input(type='hidden',name='longitude')
+                  input(type='hidden',name='latitude')
+                  input(type='hidden',name='place_name')
+
+               .modal-footer
+                  button.btn.btn-default(type='button', data-dismiss='modal') Close
+                  button.btn.btn-primary(type='submit') Create Study Session
+
+block post_scripts
+   link(rel='stylesheet', type='text/css', href='http://js.api.here.com/v3/3.0/mapsjs-ui.css')
+   script(type='text/javascript', charset='UTF-8', src='http://js.api.here.com/v3/3.0/mapsjs-core.js')
+   script(type='text/javascript', charset='UTF-8', src='http://js.api.here.com/v3/3.0/mapsjs-service.js')
+   script(type='text/javascript', charset='UTF-8', src='http://js.api.here.com/v3/3.0/mapsjs-mapevents.js')
+   script(type='text/javascript', charset='UTF-8', src='http://js.api.here.com/v3/3.0/mapsjs-ui.js')
+   script(src='/static/tagsinput/bootstrap-tagsinput.js')
+   script(src='/static/js/typeahead.js')
+   script(src='/static/js/jquery.datetimepicker.js')
+   script(src="/static/js/jquery.noty.packaged.min.js")
+
+   script
+      $("#target-interest").select2({
+            tags: true,
+            tokenSeparators: [','],
+            minimumInputLength: 3,
+            createSearchChoice: function(term, data) {
+                   if ($(data).filter(function() {
+                     return this.text.localeCompare(term) === 0;
+                   }).length === 0) {
+                     return {
+                       id: term,
+                       text: term
+                     };
+                   }
+                 },
+            multiple: true,
+            ajax: {
+               url: '/studyinterests/query/',
+               dataType: 'json',
+               data: function(term, p) {
+                  return term;
+               },
+               results: function(data, p) {
+                  console.log(data);
+                  return data;
+               }
+            }
+         });
+
+
+      function addMarkerToGroup(group, coordinate, html) {
+        var marker = new H.map.Marker(coordinate);
+        // add custom data to the marker
+        marker.setData(html);
+        group.addObject(marker);
+      }
+
+      var location_long = 0, location_lat = 0;
+      var app_id = '{{ HERE_APP_ID }}',
+         app_code = '{{ HERE_APP_CODE }}';
+
+      function moveMapToQC(map){
+        map.setCenter({lat:14.64755, lng:121.05118});
+        map.setZoom(14);
+      }
+
+      //Step 1: initialize communication with the platform
+      var platform = new H.service.Platform({
+      app_id: app_id,
+       app_code: app_code,
+       useCIT: true
+      });
+      var defaultLayers = platform.createDefaultLayers();
+
+      //Step 2: initialize a map  - not specificing a location will give a whole world view.
+      var map = new H.Map(document.getElementById('map'), defaultLayers.normal.map);
+      window.mymap = map;
+      //Step 3: make the map interactive
+      // MapEvents enables the event system
+      // Behavior implements default interactions for pan/zoom (also on mobile touch environments)
+      var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+
+      // Create the default UI components
+      var ui = H.ui.UI.createDefault(map, defaultLayers);
+
+      moveMapToQC(map);
+
+      function doSearch(){
+         var query = $("input#search-query").val();
+         $.ajax({
+            // url: '//geocoder.cit.api.here.com/6.2/geocode.json',
+            // data: {'searchtext': query, 'app_id': app_id, 'app_code':app_code, 'gen': 6},
+            //- url: '//places.demo.api.here.com/places/v1/discover/search',
+            //- data: {'at': location_long + "," + location_lat,
+            //-        'accept': 'application/json',
+            //-        'q': query, 'app_id': app_id, 'app_code':app_code},
+
+            url: "/nearby/location/",
+            data: { 'address': query }
+
+            dataType: 'json',
+            success: function(data){
+               console.log('removing previous objects');
+               // remove previous search
+               try{
+                 map.removeObjects(map.getObjects());
+               }catch(err){}
+
+               var group = new H.map.Group();
+               map.addObject(group);
+
+               // add 'tap' event listener, that opens info bubble, to the group
+               group.addEventListener('tap', function (evt) {
+                  // event target is the marker itself, group is a parent event target
+                  // for all objects that it contains
+
+                  // remove other infobubbles
+                  var bubs = ui.getBubbles();
+                  var data_ = evt.target.getData();
+                  for (i=0; i < bubs.length; i++){ui.removeBubble(bubs[i]);}
+
+                  $('span#study-location-name').text(" "+data_.title);
+                  $('input[name="here_id"]').val(data_.res.id);
+                  $('input[name="longitude"]').val(data_.res.position[0]);
+                  $('input[name="latitude"]').val(data_.res.position[1]);
+                  $('input[name="place_name"]').val(data_.title);
+
+                  var bubble =  new H.ui.InfoBubble(evt.target.getPosition(), {
+                     // read custom data
+                     content: data_.html
+                  });
+                  // show info bubble
+                  ui.addBubble(bubble);
+                  var data = {"longitude": data_.res.position[0],
+                              "latitude": data_.res.position[1]};
+
+                  $.ajax({
+                     url: '/nearby/location/',
+                     type: 'get',
+                     data: data,
+                     success: function(data_){
+                        $("#reserved-sessions-here").html();
+                        var sessions_html = "";
+                        for (i=0; i< data_.length; i++){
+                           var data = data_[i];
+                           console.log(data);
+                           sessions_html += "<a href='#'>"+data.name+" ("+data.interest+
+                           ")</a><br/>Host: "+data.host+"<br/>Sched: "+data.datetime+"<br/>----------------<br/>";
+                           console.log(sessions_html);
+                        }
+                        $("#reserved-sessions-here").html(sessions_html);
+                     },
+                     error: function(){
+                        console.log('error loading sessions_html');
+                     }
+                  })
+
+               }, false);
+
+               console.log(data);
+               //- // parse data and add markers on the map
+               //- var results = data.results.items;
+
+               //- for (var i in results){
+               //-    var result = results[i];
+               //-    console.log(result);
+               //-    console.log("Adding: "+ result.title+ " @ " +result.position[0] + ","+result.position[1])
+               //-    // add marker on map
+               //-    addMarkerToGroup(group, {lat: result.position[0], lng:result.position[1]},
+               //-       {'res':result,'title':result.title+ ", " + result.vicinity.split('<br/>')[0] ,
+               //-       'html':'<div style="width:180px;padding:2px 5px"><h4>'+ result.title + '</h4><div id="reserved-sessions-here"></div>'+
+               //-       '<br/><span class="infobubble-vicinity">'+result.vicinity+
+               //-       '<span><br/><a href="#create-session-modal" data-target="#create-session-modal"'+
+               //-       'data-toggle="modal">Plan a study session here!</a></div>'});
+               //- }
+               //- map.setViewBounds(group.getBounds());
+
+               //- window.setTimeout(function(){
+               //-    if (map.getZoom() > 13){
+               //-    map.setZoom(map.getZoom() - 1, true);}
+               //- },80);
+
+            },
+            error: function(data){
+               console.log('error');
+            }
+         });
+      }
+      $('button#location-search').click(doSearch);
+      $('form#search-form').submit(function(e){
+         e.preventDefault();
+         doSearch();
+      });
+
+      $("#datetime-picker").datetimepicker({
+         minDate:0
+      });
+
+      $("form#create-study-session").submit(function(e){
+         e.preventDefault();
+
+         var paramObj = {};
+         $.each($('form#create-study-session').serializeArray(), function(_, kv) {
+            if (paramObj.hasOwnProperty(kv.name)) {
+               paramObj[kv.name] = $.makeArray(paramObj[kv.name]);
+               paramObj[kv.name].push(kv.value);
+            }
+            else {
+               paramObj[kv.name] = kv.value;
+            }
+         });
+
+         $.ajax({
+            url: '/study_sessions/create/',
+            type: 'post',
+            data: paramObj,
+            success: function(data){
+               console.log(data);
+               window.location = '/map/?success=true&search='+ encodeURIComponent($("#search-query").val());
+            },
+            error: function(){
+               console.log('error')
+            }
+         });
+      });
+
+      function getUrlParameter(sParam){
+          var sPageURL = window.location.search.substring(1);
+          var sURLVariables = sPageURL.split('&');
+          for (var i = 0; i < sURLVariables.length; i++)
+          {
+              var sParameterName = sURLVariables[i].split('=');
+              if (sParameterName[0] == sParam)
+              {
+                  return sParameterName[1];
+              }
+          }
+      }
+
+      $(document).ready(function(){
+         // check if search exist, if so search it
+         try{
+            var query = decodeURIComponent(getUrlParameter("search"));
+
+            if (query != 'undefined'){
+               $("#search-query").val(query);
+               doSearch();
+            }
+
+            var success = decodeURIComponent(getUrlParameter("success"));
+            if (success === 'true'){
+               var n = noty({
+                  text: 'Successfully created a new study session',
+                  animation: {
+                       open: {height: 'toggle'}, // jQuery animate function property object
+                       close: {height: 'toggle'}, // jQuery animate function property object
+                       easing: 'swing', // easing
+                       speed: 500 // opening & closing animation speed
+                   }
+               });
+            }
+         }catch(err){}
+
+      });
+block css
+   link(rel='stylesheet', type='text/css', href='/static/css/jquery.datetimepicker.css')
+   link(rel='stylesheet', type='text/css', href='/static/tagsinput/bootstrap-tagsinput.css')
+   style
+      span.infobubble-vicinity{font-size: 12px;}
+      .modal-body{padding: 5px 70px}
+      #reserved-sessions-here{font-size: 10px}
+      #floating{
+        position: absolute;
+        top: 110;
+        left: 70;
+        z-index: 10;
+      }

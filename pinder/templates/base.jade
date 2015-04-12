@@ -1,0 +1,50 @@
+html(lang='en')
+  head
+    meta(http-equiv='content-type', content='text/html; charset=UTF-8')
+    meta(charset='utf-8')
+    title
+        block title
+    meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    // STYLESHEETS
+    //if lt IE 9
+    script(src='/static/js/underscore.js')
+    link(rel='stylesheet', type='text/css', href='/static/css/bootstrap.min.css')
+    link(rel='stylesheet', type='text/css', href='/static/css/creative.css')
+    //- link#skin-switcher(rel='stylesheet', type='text/css', href='/static/css/themes/default.css')
+    //- link(rel='stylesheet', type='text/css', href='/static/css/responsive.css')
+    link(href='/static/font-awesome/css/font-awesome.min.css', rel='stylesheet')
+    link(rel='stylesheet', type='text/css', href='/static/js/bootstrap-daterangepicker/daterangepicker-bs3.css')
+    link(href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700', rel='stylesheet', type='text/css')
+    block css
+  body
+    // HEADER
+    header
+      block page_content
+    // /HEADER
+
+    // /PAGE
+    // JAVASCRIPTS
+    // Placed at the end of the document so the pages load faster
+    // JQUERY
+    script(src='/static/js/jquery/jquery-2.0.3.min.js')
+    // JQUERY UI
+    script(src='/static/js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js')
+    // SELECT2
+    script(src='/static/select2/js/select2.full.min.js', type="text/javascript")
+    link(rel='stylesheet', href='/static/select2/css/select2.min.css')
+    // BOOTSTRAP
+    script(src='/static/bootstrap-dist/js/bootstrap.min.js')
+    // DATE RANGE PICKER
+    script(src='/static/js/bootstrap-daterangepicker/moment.min.js')
+    script(src='/static/js/bootstrap-daterangepicker/daterangepicker.min.js')
+    // SLIMSCROLL
+    script(type='text/javascript', src='/static/js/jQuery-slimScroll-1.3.0/jquery.slimscroll.min.js')
+    script(type='text/javascript', src='/static/js/jQuery-slimScroll-1.3.0/slimScrollHorizontal.min.js')
+    // COOKIE
+    script(type='text/javascript', src='/static/js/jQuery-Cookie/jquery.cookie.min.js')
+    // CUSTOM SCRIPT
+    //script(src='/static/js/script.js')
+
+    block post_scripts
