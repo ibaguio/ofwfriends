@@ -1,0 +1,156 @@
+
+/* Define default spinner */
+.ui-icon-loading {
+	background: url("files/resources/lib/jquerymobile/1.4.4/images/ajax-loader.gif") repeat scroll 0 0 / 46px 46px transparent!important;
+}
+/* toggleProfileButton */
+#dashboard_toggleProfileButton {
+
+}
+.ui-btn.dashboard_toggleProfileButton {
+
+}
+/* mobilecontainer */
+.ui-content.dashboard_mobilecontainer {
+	padding: 15px 15px 15px 15px;
+}
+/* setDiscoveryButton */
+#dashboard_setDiscoveryButton {
+
+}
+.ui-btn.dashboard_setDiscoveryButton {
+	margin: 4px 5px 4px 5px;
+}
+/* spacer_84 */
+.dashboard_spacer_84 {
+	width: 260px; height: 16px;
+	margin: 4px 0px 4px 0px;
+}
+/* addressInput */
+.dashboard_addressInput {
+	margin: 4px 0px 4px 0px;
+}
+/* findSomeoneNearby */
+#dashboard_findSomeoneNearby {
+
+}
+.ui-btn.dashboard_findSomeoneNearby {
+	margin: 4px 5px 4px 5px;
+}
+/* spacer_28 */
+.dashboard_spacer_28 {
+	width: 288px; height: 34px;
+	margin: 4px 0px 4px 0px;
+}
+/* mobilelabel_89 */
+.dashboard_mobilelabel_89 {
+	text-decoration: none; font-weight: bold; text-align: left; font-family: Helvetica; font-size: 16px;
+	margin: 4px 0px 4px 0px;
+	word-wrap: break-word;
+	white-space: normal;
+}
+/* nearbyGrid */
+.dashboard_nearbyGrid {
+	height: auto;
+	width:100%;
+	margin: 4px 0px 4px 0px;
+	border-collapse: collapse;
+	table-layout: fixed;
+}
+.dashboard_nearbyGrid_wrapper {
+
+}
+.dashboard_nearbyGrid > tr > td {
+	vertical-align: top;
+}
+.dashboard_nearbyGrid_row_0, .dashboard_nearbyGrid_row_0 > td {
+	height: 30px
+}
+/* mobilegridcell_31 */
+.dashboard_mobilegridcell_31 {
+	height:30px !important;
+	width:79px;
+	padding: 2px 2px 2px 2px;
+}
+.dashboard_mobilegridcell_31 > .cell-wrapper {
+	padding: 0;
+	margin: 0;
+}
+/* personPhoto */
+.dashboard_personPhoto {
+	margin: 4px 0px 4px 0px;
+	width: 70px; height: 70px;
+	display: block;
+}
+/* mobilegridcell_32 */
+.dashboard_mobilegridcell_32 {
+	height:30px !important;
+	width:auto;
+	padding: 2px 2px 2px 2px;
+}
+.dashboard_mobilegridcell_32 > .cell-wrapper {
+	padding: 0;
+	margin: 0;
+}
+/* firstNameLabel */
+.dashboard_firstNameLabel {
+	text-decoration: none; font-weight: bold; text-align: left; font-family: Helvetica; font-size: 16px;
+	margin: 4px 0px 4px 0px;
+	word-wrap: break-word;
+	white-space: normal;
+}
+/* mobilegrid_76 */
+.dashboard_mobilegrid_76 {
+	height: auto;
+	width:100%;
+	margin: 4px 0px 4px 0px;
+	border-collapse: collapse;
+	table-layout: fixed;
+}
+.dashboard_mobilegrid_76_wrapper {
+
+}
+.dashboard_mobilegrid_76 > tr > td {
+	vertical-align: top;
+}
+.dashboard_mobilegrid_76_row_0, .dashboard_mobilegrid_76_row_0 > td {
+	height: 30px
+}
+/* mobilegridcell_77 */
+.dashboard_mobilegridcell_77 {
+	height:30px !important;
+	width:35px;
+	padding: 2px 2px 2px 2px;
+}
+.dashboard_mobilegridcell_77 > .cell-wrapper {
+	padding: 0;
+	margin: 0;
+}
+/* ageLabel */
+.dashboard_ageLabel {
+	text-decoration: none; font-weight: normal; font-style: italic; text-align: left; font-family: Helvetica; font-size: 16px;
+	margin: 4px 0px 4px 0px;
+	word-wrap: break-word;
+	white-space: normal;
+}
+/* mobilegridcell_78 */
+.dashboard_mobilegridcell_78 {
+	height:30px !important;
+	width:auto;
+	padding: 2px 2px 2px 2px;
+}
+.dashboard_mobilegridcell_78 > .cell-wrapper {
+	padding: 0;
+	margin: 0;
+}
+/* cityLabel */
+.dashboard_cityLabel {
+	text-decoration: none; font-weight: normal; font-style: italic; text-align: left; font-family: Helvetica; font-size: 16px;
+	margin: 4px 0px 4px 0px;
+	word-wrap: break-word;
+	white-space: normal;
+}
+/* mobilefooter */
+.dashboard_mobilefooter {
+	min-height:38px;
+}

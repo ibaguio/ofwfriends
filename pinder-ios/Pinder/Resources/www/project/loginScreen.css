@@ -1,0 +1,44 @@
+
+/* Define default spinner */
+.ui-icon-loading {
+	background: url("files/resources/lib/jquerymobile/1.4.4/images/ajax-loader.gif") repeat scroll 0 0 / 46px 46px transparent!important;
+}
+/* loginMobileContainer */
+.ui-content.loginScreen_loginMobileContainer {
+	padding: 15px 15px 15px 15px;
+}
+/* spacer_6 */
+.loginScreen_spacer_6 {
+	width: 260px; height: 133px;
+	margin: 4px 0px 4px 0px;
+}
+/* mobilelabel_7 */
+.loginScreen_mobilelabel_7 {
+	text-decoration: none; font-weight: bold; text-align: center; font-family: Georgia; font-size: 32px;
+	margin: 4px 0px 4px 0px;
+	word-wrap: break-word;
+	white-space: normal;
+}
+/* mobilelabel_10 */
+.loginScreen_mobilelabel_10 {
+	text-decoration: none; font-weight: normal; font-style: italic; text-align: center; font-family: Helvetica; font-size: 22px;
+	margin: 4px 0px 4px 0px;
+	word-wrap: break-word;
+	white-space: normal;
+}
+/* spacer_8 */
+.loginScreen_spacer_8 {
+	width: 260px; height: 122px;
+	margin: 4px 0px 4px 0px;
+}
+/* fbLoginButton */
+#loginScreen_fbLoginButton {
+
+}
+.ui-btn.loginScreen_fbLoginButton {
+	margin: 4px 5px 4px 5px;
+}
+/* mobilefooter */
+.loginScreen_mobilefooter {
+	min-height:38px;
+}

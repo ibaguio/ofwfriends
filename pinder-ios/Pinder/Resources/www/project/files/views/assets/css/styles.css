@@ -1,0 +1,19 @@
+.remove-btn-border {
+	box-shadow: 0 0 0 #fff !important;
+	border: 0 solid #fff !important;
+}
+
+.no-border-radius {
+	-webkit-border-radius: 0;
+    border-radius: 0;
+}
+
+[dsid="loginMobileContainer"]
+{
+ background-image:url("http://ionicmaterial.com/preview/img/mountains.jpg")
+}
+
+.fb-login-btn{
+	background-color: #3b5998 !important;
+    border: none !important;
+}

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <title>
+            dashboard
+        </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta name="msapplication-tap-highlight" content="no">
+        <link href="files/resources/lib/theme/jqm/jqm.css" rel="stylesheet" />
+        <link href="files/resources/lib/theme/material-design/material-design.css" rel="stylesheet"
+        />
+        <link href="files/resources/lib/jquerymobile/1.4.4/jquery.mobile.structure-1.4.4.css"
+        rel="stylesheet" />
+        <link type="text/css" rel="stylesheet" href="files/views/assets/css/styles.css"
+        />
+        <script type="text/javascript" src="files/resources/lib/underscore/underscore.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/store/json2.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/jquery/jquery-2.1.1.js">
+        </script>
+        <script type="text/javascript">
+                    $(document).bind("mobileinit", function()
+            {
+                if (navigator.userAgent.toLowerCase().indexOf("android") != -1)
+                {
+                    $.mobile.defaultPageTransition = 'none';
+                    $.mobile.defaultDialogTransition = 'none';
+                }
+                else if (navigator.userAgent.toLowerCase().indexOf("msie") != -1)
+                {
+                    $.mobile.allowCrossDomainPages = true;
+                    $.support.cors = true;
+                }
+            });
+        </script>
+        <script type="text/javascript" src="files/resources/lib/jquerymobile/1.4.4/jquery.mobile-1.4.4.js">
+        </script>
+        <script type="text/javascript" src="files/resources/js/mobilebase.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/event/customEventHandler.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/sha1.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/oauth.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/contexts.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/jquery.xml2json.min.js">
+        </script>
+        <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/jquery-ui-map/jquery.ui.map.full.min.js">
+        </script>
+        <link href="files/resources/lib/datepicker/jquery.ui.datepicker.mobile.css" rel="stylesheet"
+        type="text/css" />
+        <script type="text/javascript" src="files/resources/lib/datepicker/jQuery.ui.datepicker.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/datepicker/jquery.ui.datepicker.mobile.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/appery.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/component-manager.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/mapping-impl.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/entity-api.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/storage-api.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/get_target_platform.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/cordova.js">
+        </script>
+        <link href="files/resources/css/mobilebase.css" rel="stylesheet" type="text/css"
+        />
+        <script type="text/javascript" src="files/views/assets/js/services/model.js">
+        </script>
+        <script type="text/javascript" src="files/views/assets/js/Facebook_Helper.js">
+        </script>
+        <script type="text/javascript" src="files/views/assets/js/services/service.js">
+        </script>
+    </head>
+    
+    <body>
+        <script language="JavaScript" type="text/javascript">
+                        $(document).bind("mobileinit", function()
+                {
+                    $.mobile.page.prototype.options.degradeInputs.date = true;
+                });
+        </script>
+        <div data-role="page" style="min-height:480px;" dsid="dashboard" id="dashboard"
+        class="type-interior" data-theme="d">
+            <!-- mobileheader -->
+            <div data-role="header" data-position="fixed" data-add-back-btn="false" data-back-btn-text="Back"
+            data-theme="d" name="mobileheader" id="dashboard_mobileheader" class="dashboard_mobileheader">
+                <h1 dsid="mobileheader">
+                    &nbsp;
+                </h1>
+                <!-- toggleProfileButton --><!--
+                --><a data-role="button" name="toggleProfileButton" dsid="toggleProfileButton" class="dashboard_toggleProfileButton ui-btn-right"
+                id="dashboard_toggleProfileButton" data-corners="true" data-icon="user" data-iconpos="left"
+                x-apple-data-detectors="false" data-inline='true' data-mini='true' data-theme="d"
+                tabindex="5">
+                Profile
+                </a>
+            </div>
+            <!-- mobilecontainer -->
+            <div data-role="content" id="dashboard_mobilecontainer" name="mobilecontainer" class="dashboard_mobilecontainer ui-content"
+            dsid="mobilecontainer" data-theme="d">
+                <link href="dashboard.css" rel="stylesheet" type="text/css" />
+                <script type="text/javascript" src="dashboard.js">
+                </script>
+                <!-- setDiscoveryButton --><!--
+                --><a data-role="button" name="setDiscoveryButton" dsid="setDiscoveryButton" class="dashboard_setDiscoveryButton"
+                id="dashboard_setDiscoveryButton" data-corners="true" data-icon="grid" data-iconpos="left"
+                x-apple-data-detectors="false" data-mini="false" data-theme="d" tabindex="6">
+                Set Discovery Preferences
+                </a><!--
+                --><!-- spacer_84 -->
+                <div id="dashboard_spacer_84" data-role="appery_spacer" dsid="spacer_84" class='mobilespacer dashboard_spacer_84'>
+                </div>
+                <!-- addressInput -->
+                <div data-role="fieldcontain" class="dashboard_addressInput ">
+                    <input type="text" name="addressInput" dsid="addressInput" value="" placeholder="You can also type a city here"
+                    id="dashboard_addressInput" tabindex="12" multiple data-theme="d" class="dashboard_addressInput"
+                    />
+                </div>
+                <!-- findSomeoneNearby --><!--
+                --><a data-role="button" name="findSomeoneNearby" dsid="findSomeoneNearby" class="dashboard_findSomeoneNearby"
+                id="dashboard_findSomeoneNearby" data-corners="true" data-icon="search" data-iconpos="left"
+                x-apple-data-detectors="false" data-mini="false" data-theme="d" tabindex="7">
+                Find Someone Nearby
+                </a><!--
+                --><!-- spacer_28 -->
+                <div id="dashboard_spacer_28" data-role="appery_spacer" dsid="spacer_28" class='mobilespacer dashboard_spacer_28'>
+                </div>
+                <!-- mobilelabel_89 -->
+                <div name="mobilelabel_89" id="dashboard_mobilelabel_89" dsid="mobilelabel_89" data-role="appery_label"
+                class="dashboard_mobilelabel_89">
+                    Results
+                </div>
+                <!-- nearbyGrid -->
+                <div class="dashboard_nearbyGrid_wrapper" data-wrapper-for="nearbyGrid">
+                    <table id="dashboard_nearbyGrid" class="dashboard_nearbyGrid" dsid="nearbyGrid"
+                    name="nearbyGrid" cellpadding=0 cellspacing=0>
+                        <col style="width:83px;" />
+                        <col style="width:auto;" />
+                        <tr class="dashboard_nearbyGrid_row_0">
+                            <!-- mobilegridcell_31 -->
+                            <td id="dashboard_mobilegridcell_31" name="mobilegridcell_31" class="dashboard_mobilegridcell_31"
+                            colspan=1 rowspan=1>
+                                <div class="cell-wrapper">
+                                    <!-- personPhoto -->
+                                    <img class="dashboard_personPhoto" src="files/resources/image/no-image.jpg" id="dashboard_personPhoto"
+                                    dsid="personPhoto" name="personPhoto" />
+                                </div>
+                            </td>
+                            <!-- mobilegridcell_32 -->
+                            <td id="dashboard_mobilegridcell_32" name="mobilegridcell_32" class="dashboard_mobilegridcell_32"
+                            colspan=1 rowspan=1>
+                                <div class="cell-wrapper">
+                                    <!-- firstNameLabel -->
+                                    <div name="firstNameLabel" id="dashboard_firstNameLabel" dsid="firstNameLabel" data-role="appery_label"
+                                    class="dashboard_firstNameLabel">
+                                    </div>
+                                    <!-- mobilegrid_76 -->
+                                    <div class="dashboard_mobilegrid_76_wrapper" data-wrapper-for="mobilegrid_76">
+                                        <table id="dashboard_mobilegrid_76" class="dashboard_mobilegrid_76" dsid="mobilegrid_76"
+                                        name="mobilegrid_76" cellpadding=0 cellspacing=0>
+                                            <col style="width:39px;" />
+                                            <col style="width:auto;" />
+                                            <tr class="dashboard_mobilegrid_76_row_0">
+                                                <!-- mobilegridcell_77 -->
+                                                <td id="dashboard_mobilegridcell_77" name="mobilegridcell_77" class="dashboard_mobilegridcell_77"
+                                                colspan=1 rowspan=1>
+                                                    <div class="cell-wrapper">
+                                                        <!-- ageLabel -->
+                                                        <div name="ageLabel" id="dashboard_ageLabel" dsid="ageLabel" data-role="appery_label"
+                                                        class="dashboard_ageLabel">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <!-- mobilegridcell_78 -->
+                                                <td id="dashboard_mobilegridcell_78" name="mobilegridcell_78" class="dashboard_mobilegridcell_78"
+                                                colspan=1 rowspan=1>
+                                                    <div class="cell-wrapper">
+                                                        <!-- cityLabel -->
+                                                        <div name="cityLabel" id="dashboard_cityLabel" dsid="cityLabel" data-role="appery_label"
+                                                        class="dashboard_cityLabel">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>
