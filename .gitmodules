@@ -1,0 +1,3 @@
+[submodule "pinder-ios"]
+	path = pinder-ios
+	url = https://github.com/francisplaza/pinder-ios
