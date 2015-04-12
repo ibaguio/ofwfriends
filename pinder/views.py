@@ -13,11 +13,34 @@ from open_facebook import OpenFacebook
 
 from pinder.here_api import *
 from pinder.models import *
+from pinder.chikka_api import send_sms
 
 logger = logging.getLogger("views")
 
 def nearby(requests):
     return render(requests, "nearby.jade")
+
+@csrf_exempt
+def api_send_message(requests):
+    try:
+        msg_type = requests.POST.get("type", "sms")
+        from_ = requests.POST.get("from")
+        # to_ = requests.POST.get("to")
+        msg = requests.POST.get("msg")
+
+        user = User.objects.get(fb_id=from_)
+        msg_fmt = "%s sent you a message via Pinder:\n\n%s"
+        if msg_type == "sms":
+            msg_final = msg_fmt % (user.first_name, msg)
+            send_sms("09989511843", msg_final)
+            print "message sent", msg_final
+
+        return HttpResponse(json.dumps({"status": "success"}))
+
+    except Exception, e:
+        err_msg = e
+        return HttpResponse(json.dumps({"status": "error",
+                                        "error": err_msg}))
 
 def nearby_location(requests):
     lon = float(requests.GET.get("longitude",0))

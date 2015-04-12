@@ -43,7 +43,7 @@ INSTALLED_APPS = (
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -144,3 +144,11 @@ LOGGING = {
         # }
     }
 }
+
+
+#########################################################
+# SMS Settings
+#########################################################
+CHIKKA_ID = "2064f98f6b0ee4b945affe221173fd499324054bf5be699bf4b22b62d81b985d"
+CHIKKA_KEY = "4ed703df25237171ca8c36da85e2e458bfa2694a79616c0cdc06caad82cddc78"
+CHIKKA_SHORT_CODE = "29290619"
