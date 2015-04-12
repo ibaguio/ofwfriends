@@ -20,9 +20,6 @@ def nearby(requests):
     return render(requests, "nearby.jade")
 
 def nearby_location(requests):
-    # fb_id = requests.session['me']
-    fb_id = "100007055736414"
-
     lon = float(requests.GET.get("longitude",0))
     lat = float(requests.GET.get("latitude",0))
 
@@ -31,14 +28,9 @@ def nearby_location(requests):
     if address:
         data = here_geocde(address, first_only=True)['coordinates']
         lon, lat = float(data['Longitude']), float(data['Latitude'])
-
-    me = User.objects.get(fb_id=fb_id)
-
     near = []
     for user in User.objects.all():
-        if user == me:
-            continue
-        if user.distance_within_coords(12, lon, lat):
+        if user.distance_within_coords(12, lat, lon):
             near.append(dict(user))
 
     return HttpResponse(json.dumps({"status": "success",

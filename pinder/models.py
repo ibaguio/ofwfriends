@@ -41,7 +41,6 @@ class User(models.Model):
 
     def distance_within_coords(self, dist, lon, lat):
         lon_, lat_ = self.coordinates
-
         return haversine(lon, lat, lon_, lat_) <= dist
 
     def distance_within(self, dist, dict_=True):
