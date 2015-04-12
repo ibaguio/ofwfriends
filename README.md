@@ -1,4 +1,4 @@
-# pinder
+# Pinder
 Pinder - The Pinoy Finder. Connect with other Filipinos where ever they are in the world!
 
 
