@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <title>
+            profilePage
+        </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta name="msapplication-tap-highlight" content="no">
+        <link href="files/resources/lib/theme/jqm/jqm.css" rel="stylesheet" />
+        <link href="files/resources/lib/theme/material-design/material-design.css" rel="stylesheet"
+        />
+        <link href="files/resources/lib/jquerymobile/1.4.4/jquery.mobile.structure-1.4.4.css"
+        rel="stylesheet" />
+        <link type="text/css" rel="stylesheet" href="files/views/assets/css/styles.css"
+        />
+        <script type="text/javascript" src="files/resources/lib/underscore/underscore.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/store/json2.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/jquery/jquery-2.1.1.js">
+        </script>
+        <script type="text/javascript">
+                    $(document).bind("mobileinit", function()
+            {
+                if (navigator.userAgent.toLowerCase().indexOf("android") != -1)
+                {
+                    $.mobile.defaultPageTransition = 'none';
+                    $.mobile.defaultDialogTransition = 'none';
+                }
+                else if (navigator.userAgent.toLowerCase().indexOf("msie") != -1)
+                {
+                    $.mobile.allowCrossDomainPages = true;
+                    $.support.cors = true;
+                }
+            });
+        </script>
+        <script type="text/javascript" src="files/resources/lib/jquerymobile/1.4.4/jquery.mobile-1.4.4.js">
+        </script>
+        <script type="text/javascript" src="files/resources/js/mobilebase.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/event/customEventHandler.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/sha1.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/oauth.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/contexts.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/jquery.xml2json.min.js">
+        </script>
+        <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/jquery-ui-map/jquery.ui.map.full.min.js">
+        </script>
+        <link href="files/resources/lib/datepicker/jquery.ui.datepicker.mobile.css" rel="stylesheet"
+        type="text/css" />
+        <script type="text/javascript" src="files/resources/lib/datepicker/jQuery.ui.datepicker.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/datepicker/jquery.ui.datepicker.mobile.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/appery.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/component-manager.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/mapping-impl.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/entity-api.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/storage-api.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/get_target_platform.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/cordova.js">
+        </script>
+        <link href="files/resources/css/mobilebase.css" rel="stylesheet" type="text/css"
+        />
+        <script type="text/javascript" src="files/views/assets/js/services/model.js">
+        </script>
+        <script type="text/javascript" src="files/views/assets/js/Facebook_Helper.js">
+        </script>
+        <script type="text/javascript" src="files/views/assets/js/services/service.js">
+        </script>
+    </head>
+    
+    <body>
+        <script language="JavaScript" type="text/javascript">
+                        $(document).bind("mobileinit", function()
+                {
+                    $.mobile.page.prototype.options.degradeInputs.date = true;
+                });
+        </script>
+        <div data-role="page" style="min-height:480px;" dsid="profilePage" id="profilePage"
+        class="type-interior" data-theme="d">
+            <!-- mobileheader -->
+            <div data-role="header" data-position="fixed" data-add-back-btn="false" data-back-btn-text="Back"
+            data-theme="d" name="mobileheader" id="profilePage_mobileheader" class="profilePage_mobileheader">
+                <h1 dsid="mobileheader">
+                    Profile
+                </h1>
+                <!-- toggleDoneButton --><!--
+                --><a data-role="button" name="toggleDoneButton" dsid="toggleDoneButton" class="profilePage_toggleDoneButton ui-btn-right"
+                id="profilePage_toggleDoneButton" data-corners="false" data-icon="none" data-iconpos='nowhere'
+                x-apple-data-detectors="false" data-inline='true' data-mini='true' data-theme="d"
+                tabindex="2">
+                Done
+                </a><!--
+                --><!-- editProfileButton --><!--
+                --><a data-role="button" name="editProfileButton" dsid="editProfileButton" class="profilePage_editProfileButton ui-btn-left"
+                id="profilePage_editProfileButton" data-corners="true" data-icon="none" data-iconpos='nowhere'
+                x-apple-data-detectors="false" data-inline='true' data-mini='true' data-theme="d"
+                tabindex="3">
+                Edit
+                </a>
+            </div>
+            <!-- mobilecontainer -->
+            <div data-role="content" id="profilePage_mobilecontainer" name="mobilecontainer"
+            class="profilePage_mobilecontainer ui-content" dsid="mobilecontainer" data-theme="d">
+                <link href="profilePage.css" rel="stylesheet" type="text/css" />
+                <script type="text/javascript" src="profilePage.js">
+                </script>
+                <!-- mobilegrid_9 -->
+                <div class="profilePage_mobilegrid_9_wrapper" data-wrapper-for="mobilegrid_9">
+                    <table id="profilePage_mobilegrid_9" class="profilePage_mobilegrid_9" dsid="mobilegrid_9"
+                    name="mobilegrid_9" cellpadding=0 cellspacing=0>
+                        <col style="width:auto;" />
+                        <col style="width:auto;" />
+                        <tr class="profilePage_mobilegrid_9_row_0">
+                            <!-- mobilegridcell_10 -->
+                            <td id="profilePage_mobilegridcell_10" name="mobilegridcell_10" class="profilePage_mobilegridcell_10"
+                            colspan=1 rowspan=1>
+                                <div class="cell-wrapper">
+                                    <!-- profilePicture -->
+                                    <img class="profilePage_profilePicture" src="files/resources/image/no-image.jpg"
+                                    id="profilePage_profilePicture" dsid="profilePicture" name="profilePicture" />
+                                </div>
+                            </td>
+                            <!-- mobilegridcell_11 -->
+                            <td id="profilePage_mobilegridcell_11" name="mobilegridcell_11" class="profilePage_mobilegridcell_11"
+                            colspan=1 rowspan=1>
+                                <div class="cell-wrapper">
+                                    <!-- spacer_16 -->
+                                    <div id="profilePage_spacer_16" data-role="appery_spacer" dsid="spacer_16" class='mobilespacer profilePage_spacer_16'>
+                                    </div>
+                                    <!-- nameLabel -->
+                                    <div name="nameLabel" id="profilePage_nameLabel" dsid="nameLabel" data-role="appery_label"
+                                    class="profilePage_nameLabel">
+                                    </div>
+                                    <!-- mobilelabel_17 -->
+                                    <div name="mobilelabel_17" id="profilePage_mobilelabel_17" dsid="mobilelabel_17"
+                                    data-role="appery_label" class="profilePage_mobilelabel_17">
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- spacer_20 -->
+                <div id="profilePage_spacer_20" data-role="appery_spacer" dsid="spacer_20" class='mobilespacer profilePage_spacer_20'>
+                </div>
+                <!-- mobilelabel_18 -->
+                <div name="mobilelabel_18" id="profilePage_mobilelabel_18" dsid="mobilelabel_18"
+                data-role="appery_label" class="profilePage_mobilelabel_18">
+                    About Me
+                </div>
+                <!-- mobilelabel_19 -->
+                <div name="mobilelabel_19" id="profilePage_mobilelabel_19" dsid="mobilelabel_19"
+                data-role="appery_label" class="profilePage_mobilelabel_19">
+                    Hello, this is me.
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>

@@ -1,0 +1,124 @@
+
+/* Define default spinner */
+.ui-icon-loading {
+	background: url("files/resources/lib/jquerymobile/1.4.4/images/ajax-loader.gif") repeat scroll 0 0 / 46px 46px transparent!important;
+}
+/* toggleDoneButton */
+#otherProfilePage_toggleDoneButton {
+
+}
+.ui-btn.otherProfilePage_toggleDoneButton {
+
+}
+/* mobilecontainer */
+.ui-content.otherProfilePage_mobilecontainer {
+	padding: 15px 15px 15px 15px;
+}
+/* mobilegrid_9 */
+.otherProfilePage_mobilegrid_9 {
+	height: auto;
+	width:100%;
+	margin: 4px 0px 4px 0px;
+	border-collapse: collapse;
+	table-layout: fixed;
+}
+.otherProfilePage_mobilegrid_9_wrapper {
+
+}
+.otherProfilePage_mobilegrid_9 > tr > td {
+	vertical-align: top;
+}
+.otherProfilePage_mobilegrid_9_row_0, .otherProfilePage_mobilegrid_9_row_0 > td {
+	height: 30px
+}
+/* mobilegridcell_10 */
+.otherProfilePage_mobilegridcell_10 {
+	height:30px !important;
+	width:auto;
+	padding: 2px 2px 2px 2px;
+}
+.otherProfilePage_mobilegridcell_10 > .cell-wrapper {
+	padding: 0;
+	margin: 0;
+}
+/* profilePicture */
+.otherProfilePage_profilePicture {
+	margin: 4px 0px 4px 0px;
+	width: 130px; height: 130px;
+	display: block;
+}
+/* mobilegridcell_11 */
+.otherProfilePage_mobilegridcell_11 {
+	height:30px !important;
+	width:auto;
+	padding: 2px 2px 2px 2px;
+}
+.otherProfilePage_mobilegridcell_11 > .cell-wrapper {
+	padding: 0;
+	margin: 0;
+}
+/* spacer_16 */
+.otherProfilePage_spacer_16 {
+	width: 30px; height: 0px;
+	margin: 0px 0px 0px 0px;
+}
+/* nameLabel */
+.otherProfilePage_nameLabel {
+	text-decoration: none; font-weight: bold; text-align: left; font-family: Helvetica; font-size: 16px;
+	margin: 4px 0px 4px 0px;
+	word-wrap: break-word;
+	white-space: normal;
+}
+/* ageLabel */
+.otherProfilePage_ageLabel {
+	text-decoration: none; font-weight: normal; text-align: left; font-family: Helvetica; font-size: 16px;
+	margin: 4px 0px 4px 0px;
+	word-wrap: break-word;
+	white-space: normal;
+}
+/* locationLabel */
+.otherProfilePage_locationLabel {
+	text-decoration: none; font-weight: normal; font-style: italic; text-align: left; font-family: Helvetica; font-size: 16px;
+	margin: 4px 0px 4px 0px;
+	word-wrap: break-word;
+	white-space: normal;
+}
+/* spacer_20 */
+.otherProfilePage_spacer_20 {
+	width: 260px; height: 24px;
+	margin: 4px 0px 4px 0px;
+}
+/* mobilelabel_18 */
+.otherProfilePage_mobilelabel_18 {
+	text-decoration: none; font-weight: normal; text-align: left; font-family: Helvetica; font-size: 16px;
+	margin: 4px 0px 4px 0px;
+	word-wrap: break-word;
+	white-space: normal;
+}
+/* aboutMeLabel */
+.otherProfilePage_aboutMeLabel {
+	text-decoration: none; font-weight: normal; font-style: italic; color: #787272; text-align: left; font-family: Helvetica; font-size: 13px;
+	margin: 4px 0px 4px 0px;
+	word-wrap: break-word;
+	white-space: normal;
+}
+/* spacer_22 */
+.otherProfilePage_spacer_22 {
+	width: 260px; height: 34px;
+	margin: 4px 0px 4px 0px;
+}
+/* SMSInput */
+.otherProfilePage_SMSInput {
+	margin: 4px 0px 4px 0px;
+}
+/* SMSSendButton */
+#otherProfilePage_SMSSendButton {
+
+}
+.ui-btn.otherProfilePage_SMSSendButton {
+	margin: 4px 5px 4px 5px;
+}
+/* mobilefooter */
+.otherProfilePage_mobilefooter {
+	min-height:38px;
+}

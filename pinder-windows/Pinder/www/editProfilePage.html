@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <title>
+            editProfilePage
+        </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta name="msapplication-tap-highlight" content="no">
+        <link href="files/resources/lib/theme/jqm/jqm.css" rel="stylesheet" />
+        <link href="files/resources/lib/theme/material-design/material-design.css" rel="stylesheet"
+        />
+        <link href="files/resources/lib/jquerymobile/1.4.4/jquery.mobile.structure-1.4.4.css"
+        rel="stylesheet" />
+        <link type="text/css" rel="stylesheet" href="files/views/assets/css/styles.css"
+        />
+        <script type="text/javascript" src="files/resources/lib/underscore/underscore.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/store/json2.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/jquery/jquery-2.1.1.js">
+        </script>
+        <script type="text/javascript">
+                    $(document).bind("mobileinit", function()
+            {
+                if (navigator.userAgent.toLowerCase().indexOf("android") != -1)
+                {
+                    $.mobile.defaultPageTransition = 'none';
+                    $.mobile.defaultDialogTransition = 'none';
+                }
+                else if (navigator.userAgent.toLowerCase().indexOf("msie") != -1)
+                {
+                    $.mobile.allowCrossDomainPages = true;
+                    $.support.cors = true;
+                }
+            });
+        </script>
+        <script type="text/javascript" src="files/resources/lib/jquerymobile/1.4.4/jquery.mobile-1.4.4.js">
+        </script>
+        <script type="text/javascript" src="files/resources/js/mobilebase.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/event/customEventHandler.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/sha1.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/oauth.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/contexts.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/jquery.xml2json.min.js">
+        </script>
+        <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/jquery-ui-map/jquery.ui.map.full.min.js">
+        </script>
+        <link href="files/resources/lib/datepicker/jquery.ui.datepicker.mobile.css" rel="stylesheet"
+        type="text/css" />
+        <script type="text/javascript" src="files/resources/lib/datepicker/jQuery.ui.datepicker.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/datepicker/jquery.ui.datepicker.mobile.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/appery.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/component-manager.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/mapping-impl.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/entity-api.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/base/storage-api.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/get_target_platform.js">
+        </script>
+        <script type="text/javascript" src="files/resources/lib/cordova.js">
+        </script>
+        <link href="files/resources/css/mobilebase.css" rel="stylesheet" type="text/css"
+        />
+        <script type="text/javascript" src="files/views/assets/js/services/model.js">
+        </script>
+        <script type="text/javascript" src="files/views/assets/js/Facebook_Helper.js">
+        </script>
+        <script type="text/javascript" src="files/views/assets/js/services/service.js">
+        </script>
+    </head>
+    
+    <body>
+        <script language="JavaScript" type="text/javascript">
+                        $(document).bind("mobileinit", function()
+                {
+                    $.mobile.page.prototype.options.degradeInputs.date = true;
+                });
+        </script>
+        <div data-role="page" style="min-height:480px;" dsid="editProfilePage" id="editProfilePage"
+        class="type-interior" data-theme="d">
+            <!-- mobileheader -->
+            <div data-role="header" data-position="fixed" data-add-back-btn="false" data-back-btn-text="Back"
+            data-theme="d" name="mobileheader" id="editProfilePage_mobileheader" class="editProfilePage_mobileheader">
+                <h1 dsid="mobileheader">
+                    Edit Profile
+                </h1>
+                <!-- doneEditButton --><!--
+                --><a data-role="button" name="doneEditButton" dsid="doneEditButton" class="editProfilePage_doneEditButton ui-btn-right"
+                id="editProfilePage_doneEditButton" data-corners="true" data-icon="none" data-iconpos='nowhere'
+                x-apple-data-detectors="false" data-inline='true' data-mini='true' data-theme="d"
+                tabindex="1">
+                Done
+                </a>
+            </div>
+            <!-- mobilecontainer -->
+            <div data-role="content" id="editProfilePage_mobilecontainer" name="mobilecontainer"
+            class="editProfilePage_mobilecontainer ui-content" dsid="mobilecontainer" data-theme="d">
+                <link href="editProfilePage.css" rel="stylesheet" type="text/css" />
+                <script type="text/javascript" src="editProfilePage.js">
+                </script>
+                <!-- mobilelabel_5 -->
+                <div name="mobilelabel_5" id="editProfilePage_mobilelabel_5" dsid="mobilelabel_5"
+                data-role="appery_label" class="editProfilePage_mobilelabel_5">
+                    Full Name
+                </div>
+                <!-- fullNameInput -->
+                <div data-role="fieldcontain" class="editProfilePage_fullNameInput ">
+                    <input type="text" name="fullNameInput" dsid="fullNameInput" value="" placeholder=""
+                    id="editProfilePage_fullNameInput" tabindex="2" multiple data-theme="d" class="editProfilePage_fullNameInput"
+                    />
+                </div>
+                <!-- mobilelabel_6 -->
+                <div name="mobilelabel_6" id="editProfilePage_mobilelabel_6" dsid="mobilelabel_6"
+                data-role="appery_label" class="editProfilePage_mobilelabel_6">
+                    Birthday
+                </div>
+                <!-- birthdayField -->
+                <div id="editProfilePage_birthdayField" dsid="birthdayField" name="birthdayField"
+                tiggzitype="object" apperytype="object" apperyclass="datepicker" tiggziclass="datepicker"
+                data-theme="d" class="editProfilePage_birthdayField ui-field-contain">
+                    <div class="datePickerControls">
+                        <a data-role="button" data-corners="true" data-icon="grid" data-iconpos="notext"
+                        data-mini="false" data-theme="d" class="datepickeropenbutton" title="Open Date Picker"
+                        style="margin-top:3px; vertical-align: middle; display: inline-block;">
+                        Open Date Picker
+                        </a>
+                        <div class="inputContainer">
+                            <input type="text" data-theme="d" value="" tabindex="3" />
+                        </div>
+                    </div>
+                </div>
+                <!-- mobilelabel_8 -->
+                <div name="mobilelabel_8" id="editProfilePage_mobilelabel_8" dsid="mobilelabel_8"
+                data-role="appery_label" class="editProfilePage_mobilelabel_8">
+                    City
+                </div>
+                <!-- cityField -->
+                <div data-role="fieldcontain" class="editProfilePage_cityField ">
+                    <input type="text" name="cityField" dsid="cityField" value="" placeholder="" id="editProfilePage_cityField"
+                    tabindex="4" multiple data-theme="d" class="editProfilePage_cityField" />
+                </div>
+                <!-- mobilelabel_10 -->
+                <div name="mobilelabel_10" id="editProfilePage_mobilelabel_10" dsid="mobilelabel_10"
+                data-role="appery_label" class="editProfilePage_mobilelabel_10">
+                    Phone Number
+                </div>
+                <!-- mobiletextinput_11 -->
+                <div data-role="fieldcontain" class="editProfilePage_mobiletextinput_11 ">
+                    <input type="text" name="mobiletextinput_11" dsid="mobiletextinput_11" value="+63 918 988 1888"
+                    placeholder="" id="editProfilePage_mobiletextinput_11" tabindex="6" multiple data-theme="d"
+                    class="editProfilePage_mobiletextinput_11" />
+                </div>
+                <!-- mobilelabel_9 -->
+                <div name="mobilelabel_9" id="editProfilePage_mobilelabel_9" dsid="mobilelabel_9"
+                data-role="appery_label" class="editProfilePage_mobilelabel_9">
+                    Write something about yourself
+                </div>
+                <!-- aboutMeField -->
+                <div data-role="fieldcontain" class="editProfilePage_aboutMeField ">
+                    <textarea name="aboutMeField" id="editProfilePage_aboutMeField" tabindex="5" dsid="aboutMeField"
+                    data-theme="d" placeholder="" class="editProfilePage_aboutMeField">
+</textarea>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>

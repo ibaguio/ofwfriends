@@ -1,0 +1,105 @@
+
+/* Define default spinner */
+.ui-icon-loading {
+	background: url("files/resources/lib/jquerymobile/1.4.4/images/ajax-loader.gif") repeat scroll 0 0 / 46px 46px transparent!important;
+}
+/* doneDiscoveryButton */
+#discoveryPreferencesPage_doneDiscoveryButton {
+
+}
+.ui-btn.discoveryPreferencesPage_doneDiscoveryButton {
+
+}
+/* mobilecontainer */
+.ui-content.discoveryPreferencesPage_mobilecontainer {
+	padding: 15px 15px 15px 15px;
+}
+/* spacer_16 */
+.discoveryPreferencesPage_spacer_16 {
+	width: 260px; height: 14px;
+	margin: 4px 0px 4px 0px;
+}
+/* mobilegrid_3 */
+.discoveryPreferencesPage_mobilegrid_3 {
+	height: auto;
+	width:100%;
+	margin: 4px 0px 4px 0px;
+	border-collapse: collapse;
+	table-layout: fixed;
+}
+.discoveryPreferencesPage_mobilegrid_3_wrapper {
+
+}
+.discoveryPreferencesPage_mobilegrid_3 > tr > td {
+	vertical-align: top;
+}
+.discoveryPreferencesPage_mobilegrid_3_row_0, .discoveryPreferencesPage_mobilegrid_3_row_0 > td {
+	height: 30px
+}
+/* mobilegridcell_4 */
+.discoveryPreferencesPage_mobilegridcell_4 {
+	height:30px !important;
+	width:auto;
+	padding: 2px 2px 2px 2px;
+}
+.discoveryPreferencesPage_mobilegridcell_4 > .cell-wrapper {
+	padding: 0;
+	margin: 0;
+}
+/* mobilelabel_9 */
+.discoveryPreferencesPage_mobilelabel_9 {
+	text-decoration: none; font-weight: normal; text-align: left; font-family: Helvetica; font-size: 14px;
+	margin: 10px 0px 4px 0px;
+	word-wrap: break-word;
+	white-space: normal;
+}
+/* mobilegridcell_5 */
+.discoveryPreferencesPage_mobilegridcell_5 {
+	height:30px !important;
+	width:auto;
+	padding: 2px 2px 2px 2px;
+}
+.discoveryPreferencesPage_mobilegridcell_5 > .cell-wrapper {
+	padding: 0;
+	margin: 0;
+}
+/* discoveryToggle */
+.discoveryPreferencesPage_discoveryToggle {
+	margin: 0px 0px 0px 45px;
+}
+/* spacer_12 */
+.discoveryPreferencesPage_spacer_12 {
+	width: 260px; height: 14px;
+	margin: 4px 0px 4px 0px;
+}
+/* mobilelabel_11 */
+.discoveryPreferencesPage_mobilelabel_11 {
+	text-decoration: none; font-weight: normal; text-align: left; font-family: Helvetica; font-size: 14px;
+	margin: 4px 0px 4px 0px;
+	word-wrap: break-word;
+	white-space: normal;
+}
+/* distanceSlider */
+.discoveryPreferencesPage_distanceSlider {
+	margin: 4px 0px 4px 0px;
+}
+/* spacer_13 */
+.discoveryPreferencesPage_spacer_13 {
+	width: 260px; height: 14px;
+	margin: 4px 0px 4px 0px;
+}
+/* mobilelabel_14 */
+.discoveryPreferencesPage_mobilelabel_14 {
+	text-decoration: none; font-weight: normal; text-align: left; font-family: Helvetica; font-size: 14px;
+	margin: 4px 0px 4px 0px;
+	word-wrap: break-word;
+	white-space: normal;
+}
+/* mobileslider_15 */
+.discoveryPreferencesPage_mobileslider_15 {
+	margin: 4px 0px 4px 0px;
+}
+/* mobilefooter */
+.discoveryPreferencesPage_mobilefooter {
+	min-height:38px;
+}
