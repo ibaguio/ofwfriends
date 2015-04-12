@@ -24,7 +24,7 @@ def nearby(requests):
 def api_send_message(requests):
     try:
         msg_type = requests.POST.get("type", "sms")
-        from_ = requests.POST.get("from")
+        from_ = requests.POST.get("me")
         # to_ = requests.POST.get("to")
         msg = requests.POST.get("msg")
 
