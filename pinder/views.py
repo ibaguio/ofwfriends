@@ -29,9 +29,9 @@ def api_send_message(requests):
         msg = requests.POST.get("msg")
 
         user = User.objects.get(fb_id=from_)
-        msg_fmt = "%s sent you a message via Pinder:\n\n%s"
+        msg_fmt = "%s sent you a message via Pinder:\n\n%s\n\nYou may connect with me at http://pinder.ph/user/%s"
         if msg_type == "sms":
-            msg_final = msg_fmt % (user.first_name, msg)
+            msg_final = msg_fmt % (user.first_name, msg, user.fb_id)
             send_sms("09989511843", msg_final)
             print "message sent", msg_final
 
