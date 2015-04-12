@@ -51,7 +51,7 @@ def nearby_location(requests):
     near = []
 
     try:
-        q = Q(first_name__iexact=address) | Q(last_name__iexact=address) | Q(fb_id=address)
+        q = Q(first_name__icontains=address) | Q(last_name__icontains=address) | Q(fb_id=address)
         for user in User.objects.filter(q):
             near.append(dict(user))
 
