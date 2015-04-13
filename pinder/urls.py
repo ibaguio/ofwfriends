@@ -22,4 +22,4 @@ urlpatterns = patterns('pinder',
     url(r'^admin/', include(admin.site.urls)),
 )
 
-1048612677
+localhost:8000/api/sms/?from=1048612677
